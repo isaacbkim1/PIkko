@@ -1,92 +1,117 @@
 .kakao-map-wrapper {
-  width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
   position: relative;
-  background: #f0f0f0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #e8eaf0;
+  width: 100%;
 }
 
-.kakao-map-placeholder {
+.kakao-map-canvas {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
+}
+
+/* Loading state */
+.kakao-map-loading {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #1A1A2E, #0F3460);
-  color: #fff;
-  font-size: 14px;
+  gap: 10px;
+  background: linear-gradient(135deg, #1A1A2E, #16213E);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  border-radius: var(--radius);
 }
 
-.kakao-map-spinner {
+.kakao-spinner {
   width: 28px;
   height: 28px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(255, 107, 53, 0.3);
   border-top-color: #FF6B35;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error / fallback state */
 .kakao-fallback {
   width: 100%;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #1A1A2E, #16213E, #0F3460);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #1A1A2E, #16213E);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.kakao-fallback-inner {
+  padding: 20px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: #fff;
-  padding: 20px;
-  box-sizing: border-box;
+  gap: 6px;
 }
 
 .kakao-fallback-icon {
   font-size: 36px;
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
 .kakao-fallback-title {
-  margin: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
+  color: #fff;
+  margin: 0;
 }
 
 .kakao-fallback-sub {
-  margin: 0;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  text-align: center;
+  margin: 0 0 10px;
 }
 
 .kakao-fallback-list {
-  margin-top: 12px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .kakao-fallback-item {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 13px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
   transition: background 0.15s;
 }
 
+.kakao-fallback-item:last-child {
+  border-bottom: none;
+}
+
 .kakao-fallback-item:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.kakao-fallback-rating {
-  color: #FF6B35;
+.kakao-fallback-price {
+  font-size: 12px;
   font-weight: 600;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  color: #FF6B35;
 }

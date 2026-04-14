@@ -8,22 +8,25 @@ export default function BookingConfirmScreen() {
   const location = useLocation()
   const navigate = useNavigate()
   const { booking, facility } = location.state || {}
-  const [showContent, setShowContent] = useState(false)
+  const [visible, setVisible] = useState(false)
 
+  // Trigger entrance animation after a brief mount delay.
   useEffect(() => {
-    const timer = setTimeout(() => setShowContent(true), 300)
-    return () => clearTimeout(timer)
+    const t = setTimeout(() => setVisible(true), 200)
+    return () => clearTimeout(t)
   }, [])
 
+  // Guard: if user navigates here directly without booking state, redirect.
   if (!booking || !facility) {
     return (
-      <div>
-        <Header showBack title="예약 확인" />
-        <div style={{ padding: 40, textAlign: 'center', color: '#888' }}>
+      <div className="confirm-screen">
+        <Header showBack={false} title="" />
+        <div className="confirm-error">
+          <span className="confirm-error-icon">📋</span>
           <p>예약 정보를 찾을 수 없습니다.</p>
           <button
+            className="confirm-btn-primary"
             onClick={() => navigate('/')}
-            style={{ marginTop: 16, background: '#FF6B35', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: 12, cursor: 'pointer', fontSize: 14, fontWeight: 600, fontFamily: 'inherit' }}
           >
             홈으로 가기
           </button>
@@ -36,22 +39,23 @@ export default function BookingConfirmScreen() {
     <div className="confirm-screen">
       <Header showBack={false} title="" />
 
-      <div className={`confirm-content ${showContent ? 'confirm-visible' : ''}`}>
-        {/* Success Animation */}
-        <div className="confirm-success-circle">
-          <div className="confirm-checkmark">✓</div>
+      <div className={`confirm-content ${visible ? 'confirm-content--visible' : ''}`}>
+
+        {/* ── Success Circle ── */}
+        <div className="confirm-success-circle" aria-hidden="true">
+          <span className="confirm-check">✓</span>
         </div>
 
         <h1 className="confirm-title">예약이 완료되었습니다!</h1>
         <p className="confirm-sub">예약 확인서가 이메일로 발송됩니다</p>
 
-        {/* Booking Reference */}
+        {/* ── Booking Reference ── */}
         <div className="confirm-ref-card">
           <span className="confirm-ref-label">예약 번호</span>
           <span className="confirm-ref-num">{booking.ref || booking.id}</span>
         </div>
 
-        {/* Booking Details */}
+        {/* ── Booking Details ── */}
         <div className="confirm-details-card">
           <div className="confirm-detail-row">
             <span className="detail-label">시설</span>
@@ -70,21 +74,29 @@ export default function BookingConfirmScreen() {
             <span className="detail-value">{booking.players}명</span>
           </div>
           <div className="confirm-detail-row">
-            <span className="detail-label">주소</span>
-            <span className="detail-value detail-address">{facility.address}</span>
+            <span className="detail-label">위치</span>
+            <span className="detail-value detail-value--address">
+              {facility.address}
+            </span>
           </div>
-          <div className="confirm-divider" />
+          <div className="confirm-detail-divider" />
           <div className="confirm-detail-row">
             <span className="detail-label">결제 금액</span>
-            <span className="detail-value detail-price">{booking.amount.toLocaleString()}원</span>
+            <span className="detail-value detail-value--price">
+              {booking.amount.toLocaleString()}원
+            </span>
           </div>
           <div className="confirm-detail-row">
             <span className="detail-label">결제 상태</span>
             <Badge variant="success" size="sm">결제 완료</Badge>
           </div>
+          <div className="confirm-detail-row">
+            <span className="detail-label">결제 방식</span>
+            <Badge variant="demo" size="sm">DEMO</Badge>
+          </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* ── Actions ── */}
         <div className="confirm-actions">
           <button
             className="confirm-btn-primary"
@@ -100,7 +112,6 @@ export default function BookingConfirmScreen() {
           </button>
         </div>
 
-        {/* Sharing / More */}
         <p className="confirm-tip">
           📍 {facility.district} · 코트에 10분 전에 도착해 주세요
         </p>

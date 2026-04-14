@@ -1,12 +1,16 @@
+/* ── Profile Screen ──────────────────────────────────────────────────────── */
+
 .profile-screen {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
-.profile-header-card {
-  background: var(--card-bg);
+/* ── Hero Card ────────────────────────────────────────────────────────────── */
+
+.profile-hero-card {
+  background: #fff;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 20px;
@@ -20,16 +24,16 @@
   height: 64px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary), var(--navy));
-  color: white;
-  font-size: 28px;
-  font-weight: 700;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.profile-name-block {
+.profile-info {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -38,201 +42,250 @@
 
 .profile-name {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text);
+  letter-spacing: -0.3px;
 }
 
 .profile-district-badge {
   background: var(--primary);
-  color: white;
+  color: #fff;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 3px 10px;
-  border-radius: 20px;
+  border-radius: 100px;
   width: fit-content;
 }
 
 .profile-edit-btn {
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 8px;
-  padding: 6px 14px;
+  padding: 7px 14px;
   font-size: 13px;
   color: var(--text-secondary);
   cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
 }
 
-.profile-stats {
-  background: var(--card-bg);
+/* ── Stats Card ───────────────────────────────────────────────────────────── */
+
+.profile-stats-card {
+  background: #fff;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 20px;
+  padding: 18px 20px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.stat-item {
+.profile-stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
 }
 
-.stat-value {
+.profile-stat-value {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary);
+  letter-spacing: -0.5px;
 }
 
-.stat-label {
-  font-size: 12px;
+.profile-stat-label {
+  font-size: 11px;
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
-.stat-divider {
+.profile-stat-divider {
   width: 1px;
   height: 40px;
   background: var(--border);
 }
 
+/* ── Generic Sections ─────────────────────────────────────────────────────── */
+
 .profile-section {
-  background: var(--card-bg);
+  background: #fff;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 16px;
 }
 
-.section-title {
+.profile-section-title {
   font-size: 15px;
   font-weight: 700;
   color: var(--text);
   margin-bottom: 12px;
 }
 
-.section-header-row {
+.profile-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
 }
 
-.section-header-row .section-title {
+.profile-section-header .profile-section-title {
   margin-bottom: 0;
 }
 
-.view-all-btn {
-  background: none;
-  border: none;
-  color: var(--primary);
+.profile-view-all {
   font-size: 13px;
   font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: none;
   cursor: pointer;
+  font-family: inherit;
 }
 
-.sports-tags {
+/* ── Sports Tags ──────────────────────────────────────────────────────────── */
+
+.profile-sports-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.sport-tag {
+.profile-sport-tag {
   background: var(--primary);
-  color: white;
+  color: #fff;
   font-size: 13px;
   font-weight: 600;
   padding: 6px 14px;
-  border-radius: 20px;
+  border-radius: 100px;
 }
 
-.sport-tag-add {
+.profile-sport-tag--add {
   background: var(--bg);
   color: var(--text-secondary);
-  border: 1px dashed var(--border);
+  border: 1.5px dashed var(--border);
 }
 
-.mini-booking-card {
+/* ── Booking Rows ─────────────────────────────────────────────────────────── */
+
+.profile-booking-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-light);
 }
 
-.mini-booking-card:last-child {
+.profile-booking-row:last-child {
   border-bottom: none;
 }
 
-.mini-booking-name {
+.profile-booking-info {
+  flex: 1;
+}
+
+.profile-booking-name {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
   margin-bottom: 3px;
 }
 
-.mini-booking-date {
+.profile-booking-meta {
   font-size: 12px;
   color: var(--text-secondary);
 }
 
-.mini-status-badge {
+.profile-booking-badge {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: 100px;
   white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: 8px;
 }
 
-.empty-small {
-  text-align: center;
-  color: var(--text-secondary);
+.profile-empty-text {
   font-size: 13px;
-  padding: 16px 0;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 0;
 }
 
-.admin-link-btn {
+/* ── Admin Button ─────────────────────────────────────────────────────────── */
+
+.profile-admin-btn {
   width: 100%;
-  padding: 14px;
+  padding: 15px;
   background: var(--navy);
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
+  font-family: inherit;
   text-align: left;
+  transition: opacity 0.15s;
 }
 
-.settings-list {
+.profile-admin-btn:hover {
+  opacity: 0.88;
+}
+
+/* ── Settings ─────────────────────────────────────────────────────────────── */
+
+.profile-settings-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-.settings-item {
+.profile-settings-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
+  padding: 15px 0;
   background: none;
   border: none;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 15px;
   color: var(--text);
   cursor: pointer;
   text-align: left;
   width: 100%;
+  font-family: inherit;
+  transition: background 0.1s;
 }
 
-.settings-item:last-child {
+.profile-settings-item:last-child {
   border-bottom: none;
 }
 
-.logout-item {
-  color: #EF4444;
+.profile-settings-item--danger {
+  color: var(--danger);
 }
 
-.chevron {
+.settings-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-item-icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.settings-item-label {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.settings-chevron {
   font-size: 20px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
+  line-height: 1;
 }

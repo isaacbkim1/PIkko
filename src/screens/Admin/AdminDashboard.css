@@ -1,139 +1,119 @@
+/* ── Admin Dashboard ─────────────────────────────────────────────────────── */
+
 .admin-screen {
-  padding: 16px;
-  padding-bottom: 24px;
-}
-
-.admin-denied {
-  padding: 60px 24px;
-  text-align: center;
-}
-
-.denied-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-}
-
-.denied-btn {
-  margin-top: 16px;
-  padding: 12px 28px;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.admin-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.admin-role-badge {
-  background: var(--primary-light);
-  color: var(--primary);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 100px;
-}
-
-.admin-subtitle {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-/* Stats Grid */
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.stat-card {
-  background: #fff;
-  border-radius: 14px;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  gap: 16px;
 }
 
-.stat-card-icon {
+/* ── Header Strip ─────────────────────────────────────────────────────────── */
+
+.admin-header-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-role-badge {
+  background: var(--navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+.admin-date-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── Stats Grid ───────────────────────────────────────────────────────────── */
+
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.admin-stat-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-stat-icon {
+  font-size: 24px;
+}
+
+.admin-stat-value {
   font-size: 22px;
-  margin-bottom: 4px;
-}
-
-.stat-card-value {
-  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
 
-.stat-card-label {
+.admin-stat-label {
   font-size: 12px;
   color: var(--text-secondary);
   font-weight: 500;
 }
 
-/* Admin Sections */
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+
 .admin-section {
   background: #fff;
-  border-radius: 14px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .admin-section-title {
   font-size: 15px;
   font-weight: 700;
-  color: var(--navy);
-  margin: 0 0 12px;
+  color: var(--text);
+  margin-bottom: 14px;
 }
 
-/* Bookings Table */
-.bookings-table {
+/* ── Bookings List ────────────────────────────────────────────────────────── */
+
+.admin-bookings-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-.table-header {
+.admin-booking-header {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1.5fr 1.2fr;
+  grid-template-columns: 2fr 1.5fr 1fr 1.8fr 1.2fr;
   gap: 4px;
   padding: 8px 0;
-  border-bottom: 1.5px solid var(--border);
+  border-bottom: 2px solid var(--border);
   font-size: 10px;
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
-.table-row {
+.admin-booking-row {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1.5fr 1.2fr;
+  grid-template-columns: 2fr 1.5fr 1fr 1.8fr 1.2fr;
   gap: 4px;
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border-light);
-  font-size: 12px;
   align-items: center;
+  font-size: 12px;
 }
 
-.table-row:last-child {
+.admin-booking-row:last-child {
   border-bottom: none;
 }
 
-.table-facility {
+.admin-booking-facility {
   font-weight: 600;
   color: var(--text);
   overflow: hidden;
@@ -141,114 +121,143 @@
   white-space: nowrap;
 }
 
-.table-user,
-.table-time {
+.admin-booking-user,
+.admin-booking-time {
   color: var(--text-secondary);
 }
 
-.table-amount {
+.admin-booking-amount {
   font-weight: 700;
-  color: var(--navy);
+  color: var(--text);
 }
 
-.table-status {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3px 7px;
-  border-radius: 100px;
-  font-size: 10px;
-  font-weight: 700;
-}
+/* ── Facility Status ──────────────────────────────────────────────────────── */
 
-/* Facility Status */
-.facility-list {
+.admin-facility-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-.facility-status-row {
+.admin-facility-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
+  align-items: center;
+  padding: 13px 0;
   border-bottom: 1px solid var(--border-light);
 }
 
-.facility-status-row:last-child {
+.admin-facility-row:last-child {
   border-bottom: none;
 }
 
-.facility-status-info {
+.admin-facility-info {
   flex: 1;
 }
 
-.facility-status-name {
+.admin-facility-name {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
-  margin: 0 0 2px;
+  margin-bottom: 2px;
 }
 
-.facility-status-district {
+.admin-facility-district {
   font-size: 12px;
   color: var(--text-secondary);
-  margin: 0;
 }
 
-/* Toggle */
-.toggle-wrapper {
+.admin-toggle-wrapper {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
-.toggle-btn {
+/* Toggle switch */
+.admin-toggle {
+  position: relative;
   width: 44px;
   height: 24px;
-  border-radius: 100px;
-  border: none;
-  position: relative;
   cursor: pointer;
-  transition: background 0.2s;
-  padding: 0;
+  flex-shrink: 0;
 }
 
-.toggle-btn.on {
+.admin-toggle input {
+  display: none;
+}
+
+.admin-toggle-slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: var(--border);
+  transition: background 0.2s;
+}
+
+.admin-toggle input:checked + .admin-toggle-slider {
   background: var(--primary);
 }
 
-.toggle-btn.off {
-  background: #D1D5DB;
-}
-
-.toggle-thumb {
+.admin-toggle-slider::before {
+  content: '';
   position: absolute;
-  top: 3px;
-  left: 3px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  top: 3px;
+  left: 3px;
   transition: transform 0.2s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
-.toggle-btn.on .toggle-thumb {
+.admin-toggle input:checked + .admin-toggle-slider::before {
   transform: translateX(20px);
 }
 
-.toggle-label {
+.admin-toggle-label {
   font-size: 12px;
   font-weight: 600;
   min-width: 32px;
 }
 
-.toggle-label.on {
-  color: var(--primary);
+.admin-toggle-label--on  { color: #10B981; }
+.admin-toggle-label--off { color: var(--text-muted); }
+
+/* ── Access Denied ────────────────────────────────────────────────────────── */
+
+.admin-access-denied {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+  text-align: center;
 }
 
-.toggle-label.off {
-  color: var(--text-muted);
+.admin-denied-icon  { font-size: 52px; }
+
+.admin-denied-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.admin-denied-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.admin-denied-btn {
+  margin-top: 8px;
+  padding: 13px 28px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
 }

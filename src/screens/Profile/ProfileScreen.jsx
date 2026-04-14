@@ -1,141 +1,169 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.jsx";
-import { useBooking } from "../../context/BookingContext.jsx";
-import Layout from "../../components/Layout/Layout.jsx";
-import "./ProfileScreen.css";
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import { useBooking } from '../../context/BookingContext'
+import Layout from '../../components/Layout/Layout'
+import './ProfileScreen.css'
 
-// TODO: [DUPR] Fetch and display DUPR skill rating from https://www.dupr.com
-// TODO: [Kakao] Sync profile with Kakao account on Kakao Login integration
+// TODO: [DUPR] Fetch and display DUPR skill rating from https://www.dupr.com/api
+// TODO: [Kakao] Sync profile avatar and name from Kakao account on Kakao Login integration
+// TODO: [Firebase] Replace localStorage with Firestore user document
+
+const SPORT_LABELS = {
+  pickleball: '🏓 피클볼',
+  tennis:     '🎾 테니스',
+  badminton:  '🏸 배드민턴',
+  basketball: '🏀 농구',
+  futsal:     '⚽ 풋살',
+}
+
+const STATUS_CONFIG = {
+  confirmed: { label: '예약 확정', color: '#10B981', bg: 'rgba(16,185,129,0.12)' },
+  completed: { label: '완료',     color: '#6B7280', bg: '#F3F4F6' },
+  cancelled: { label: '취소됨',   color: '#EF4444', bg: 'rgba(239,68,68,0.12)' },
+}
 
 export default function ProfileScreen() {
-  const { user, logout } = useAuth();
-  const { bookings } = useBooking();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const { user, logout } = useAuth()
+  const { bookings } = useBooking()
 
-  const userBookings = bookings.filter((b) => b.userId === user?.id);
-  const recentBookings = userBookings.slice(0, 2);
-
-  const initials = user?.name
-    ? user.name.charAt(0)
-    : "U";
+  const recentBookings = bookings.slice(0, 2)
+  const initials = user?.name?.charAt(0) ?? 'U'
 
   const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+    logout()
+    navigate('/login')
+  }
 
-  const statusColor = {
-    confirmed: "#10B981",
-    completed: "#6B7280",
-    cancelled: "#EF4444",
-  };
-
-  const statusLabel = {
-    confirmed: "예약 확정",
-    completed: "완료",
-    cancelled: "취소됨",
-  };
+  const SETTINGS = [
+    { icon: '🔔', label: '알림 설정' },
+    { icon: '💳', label: '결제 수단' },
+    { icon: '🔒', label: '개인정보 보호' },
+  ]
 
   return (
     <Layout title="프로필">
       <div className="profile-screen">
-        {/* Avatar + Name */}
-        <div className="profile-header-card">
+
+        {/* ── Profile Card ── */}
+        <div className="profile-hero-card">
           <div className="profile-avatar">{initials}</div>
-          <div className="profile-name-block">
-            <h2 className="profile-name">{user?.name || "사용자"}</h2>
-            <span className="profile-district-badge">{user?.district || "서울"}</span>
+          <div className="profile-info">
+            <h2 className="profile-name">{user?.name ?? '사용자'}</h2>
+            {user?.district && (
+              <span className="profile-district-badge">{user.district}</span>
+            )}
           </div>
           <button className="profile-edit-btn">수정</button>
         </div>
 
-        {/* Stats */}
-        <div className="profile-stats">
-          <div className="stat-item">
-            <span className="stat-value">{userBookings.length}</span>
-            <span className="stat-label">총 예약</span>
+        {/* ── Stats ── */}
+        <div className="profile-stats-card">
+          <div className="profile-stat-item">
+            <span className="profile-stat-value">{bookings.length}</span>
+            <span className="profile-stat-label">총 예약</span>
           </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-value">{user?.sports?.length || 1}</span>
-            <span className="stat-label">스포츠</span>
+          <div className="profile-stat-divider" />
+          <div className="profile-stat-item">
+            <span className="profile-stat-value">{user?.sports?.length ?? 1}</span>
+            <span className="profile-stat-label">스포츠</span>
           </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-value">
+          <div className="profile-stat-divider" />
+          <div className="profile-stat-item">
+            <span className="profile-stat-value">
               {user?.joinDate ? new Date(user.joinDate).getFullYear() : 2024}년~
             </span>
-            <span className="stat-label">가입일</span>
+            <span className="profile-stat-label">가입일</span>
           </div>
         </div>
 
-        {/* Sports Interests */}
+        {/* ── Sports Interests ── */}
         <div className="profile-section">
-          <h3 className="section-title">관심 스포츠</h3>
-          <div className="sports-tags">
-            {(user?.sports || ["pickleball"]).map((s) => (
-              <span key={s} className="sport-tag">
-                {s === "pickleball" ? "🏓 피클볼" : s}
+          <h3 className="profile-section-title">관심 스포츠</h3>
+          <div className="profile-sports-tags">
+            {(user?.sports ?? ['pickleball']).map((s) => (
+              <span key={s} className="profile-sport-tag">
+                {SPORT_LABELS[s] ?? s}
               </span>
             ))}
-            <span className="sport-tag sport-tag-add">+ 추가</span>
+            <span className="profile-sport-tag profile-sport-tag--add">+ 추가</span>
           </div>
         </div>
 
-        {/* Recent Bookings */}
+        {/* ── Recent Bookings ── */}
         <div className="profile-section">
-          <div className="section-header-row">
-            <h3 className="section-title">최근 예약</h3>
-            <button className="view-all-btn" onClick={() => navigate("/my-bookings")}>
+          <div className="profile-section-header">
+            <h3 className="profile-section-title">최근 예약</h3>
+            <button
+              className="profile-view-all"
+              onClick={() => navigate('/my-bookings')}
+            >
               전체보기 →
             </button>
           </div>
           {recentBookings.length === 0 ? (
-            <div className="empty-small">아직 예약 내역이 없습니다</div>
+            <p className="profile-empty-text">아직 예약 내역이 없습니다</p>
           ) : (
-            recentBookings.map((b) => (
-              <div key={b.id} className="mini-booking-card">
-                <div>
-                  <p className="mini-booking-name">{b.facilityName}</p>
-                  <p className="mini-booking-date">{b.date} · {b.time} · {b.players}인</p>
+            recentBookings.map((b) => {
+              const sc = STATUS_CONFIG[b.bookingStatus] ?? STATUS_CONFIG.confirmed
+              return (
+                <div key={b.id} className="profile-booking-row">
+                  <div className="profile-booking-info">
+                    <p className="profile-booking-name">{b.facilityName}</p>
+                    <p className="profile-booking-meta">
+                      {b.date} · {b.time} · {b.players}인
+                    </p>
+                  </div>
+                  <span
+                    className="profile-booking-badge"
+                    style={{ background: sc.bg, color: sc.color }}
+                  >
+                    {sc.label}
+                  </span>
                 </div>
-                <span
-                  className="mini-status-badge"
-                  style={{ background: statusColor[b.bookingStatus] + "20", color: statusColor[b.bookingStatus] }}
-                >
-                  {statusLabel[b.bookingStatus]}
-                </span>
-              </div>
-            ))
+              )
+            })
           )}
         </div>
 
-        {/* Admin link */}
-        {(user?.role === "admin" || user?.role === "operator") && (
-          <div className="profile-section">
-            <button className="admin-link-btn" onClick={() => navigate("/admin")}>
-              🛠 관리자 대시보드
-            </button>
-          </div>
+        {/* ── Admin Link ── */}
+        {(user?.role === 'admin' || user?.role === 'operator') && (
+          <button
+            className="profile-admin-btn"
+            onClick={() => navigate('/admin')}
+          >
+            🛠 관리자 대시보드
+          </button>
         )}
 
-        {/* Settings */}
+        {/* ── Settings ── */}
         <div className="profile-section">
-          <h3 className="section-title">설정</h3>
-          <div className="settings-list">
-            {["🔔 알림 설정", "💳 결제 수단", "🔒 개인정보 보호"].map((item) => (
-              <button key={item} className="settings-item">
-                <span>{item}</span>
-                <span className="chevron">›</span>
+          <h3 className="profile-section-title">설정</h3>
+          <div className="profile-settings-list">
+            {SETTINGS.map((item) => (
+              <button key={item.label} className="profile-settings-item">
+                <span className="settings-item-left">
+                  <span className="settings-item-icon">{item.icon}</span>
+                  <span className="settings-item-label">{item.label}</span>
+                </span>
+                <span className="settings-chevron">›</span>
               </button>
             ))}
-            <button className="settings-item logout-item" onClick={handleLogout}>
-              <span>🚪 로그아웃</span>
-              <span className="chevron">›</span>
+            <button
+              className="profile-settings-item profile-settings-item--danger"
+              onClick={handleLogout}
+            >
+              <span className="settings-item-left">
+                <span className="settings-item-icon">🚪</span>
+                <span className="settings-item-label">로그아웃</span>
+              </span>
+              <span className="settings-chevron">›</span>
             </button>
           </div>
         </div>
+
+        <div style={{ height: 16 }} />
       </div>
     </Layout>
-  );
+  )
 }

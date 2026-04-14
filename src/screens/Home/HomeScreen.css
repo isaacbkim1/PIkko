@@ -1,9 +1,12 @@
+/* ── Home Screen ─────────────────────────────────────────────────────────── */
+
 .home-screen {
-  background: #f8f8f8;
+  background: var(--bg);
 }
 
-/* Hero Banner */
-.hero-banner {
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+
+.home-hero {
   background: linear-gradient(135deg, #1A1A2E 0%, #16213E 60%, #0F3460 100%);
   padding: 24px 20px 32px;
   display: flex;
@@ -13,7 +16,8 @@
   overflow: hidden;
 }
 
-.hero-banner::before {
+/* decorative circle */
+.home-hero::before {
   content: '';
   position: absolute;
   top: -40px;
@@ -22,39 +26,40 @@
   height: 180px;
   border-radius: 50%;
   background: rgba(255, 107, 53, 0.12);
+  pointer-events: none;
 }
 
-.hero-content {
+.home-hero-content {
   flex: 1;
   z-index: 1;
 }
 
-.hero-greeting {
-  color: rgba(255, 255, 255, 0.7);
+.home-hero-greeting {
+  color: rgba(255, 255, 255, 0.65);
   font-size: 14px;
-  margin: 0 0 8px;
+  margin-bottom: 8px;
 }
 
-.hero-title {
+.home-hero-title {
   color: #fff;
   font-size: 24px;
   font-weight: 800;
   line-height: 1.3;
-  margin: 0 0 8px;
+  margin-bottom: 8px;
   letter-spacing: -0.5px;
 }
 
-.hero-highlight {
+.home-hero-highlight {
   color: #FF6B35;
 }
 
-.hero-sub {
-  color: rgba(255, 255, 255, 0.6);
+.home-hero-sub {
+  color: rgba(255, 255, 255, 0.55);
   font-size: 13px;
-  margin: 0 0 20px;
+  margin-bottom: 20px;
 }
 
-.hero-cta {
+.home-hero-cta {
   background: #FF6B35;
   color: #fff;
   border: none;
@@ -67,268 +72,295 @@
   transition: background 0.2s;
 }
 
-.hero-cta:hover {
+.home-hero-cta:hover {
   background: #e85d2a;
 }
 
-.hero-decoration {
-  z-index: 1;
-}
-
-.hero-ball {
+.home-hero-deco {
   font-size: 64px;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  z-index: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   animation: float 3s ease-in-out infinite;
+  user-select: none;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50%       { transform: translateY(-8px); }
 }
 
-/* Sections */
-.section {
+/* ── Notification button (in Header via rightAction) ─────────────────────── */
+
+.notif-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.notif-btn:hover {
+  background: var(--bg);
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+
+.home-section {
   padding: 20px 16px 0;
 }
 
-.section-header {
+.home-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
 }
 
-.section-title {
+.home-section-title {
   font-size: 17px;
-  font-weight: 700;
-  color: #1A1A2E;
-  margin: 0;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
 }
 
-.section-more {
-  background: none;
-  border: none;
-  color: #FF6B35;
+.home-section-more {
   font-size: 13px;
+  color: var(--primary);
   font-weight: 600;
   cursor: pointer;
-  font-family: inherit;
   padding: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
 }
 
-/* Sport Pills */
-.sport-pills {
+/* ── Sport Pills ─────────────────────────────────────────────────────────── */
+
+.home-sport-pills {
   display: flex;
   gap: 8px;
   overflow-x: auto;
   padding-bottom: 4px;
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.sport-pills::-webkit-scrollbar {
+.home-sport-pills::-webkit-scrollbar {
   display: none;
 }
 
-.sport-pill {
+.home-sport-pill {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  border-radius: 20px;
-  border: 2px solid #e8e8e8;
+  border-radius: 100px;
+  border: 2px solid var(--border);
   background: #fff;
   font-size: 13px;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   cursor: pointer;
   white-space: nowrap;
   font-family: inherit;
   transition: all 0.15s;
+  flex-shrink: 0;
 }
 
-.sport-pill-active {
-  background: #FF6B35;
-  border-color: #FF6B35;
+.home-sport-pill--active {
+  background: var(--primary);
+  border-color: var(--primary);
   color: #fff;
 }
 
-/* Facilities Horizontal Scroll */
-.facilities-scroll {
+/* ── Facility Horizontal Scroll ──────────────────────────────────────────── */
+
+.home-facilities-scroll {
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.facilities-scroll::-webkit-scrollbar {
+.home-facilities-scroll::-webkit-scrollbar {
   display: none;
 }
 
-.facility-card {
+.home-facility-card {
   min-width: 200px;
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
   flex-shrink: 0;
 }
 
-.facility-card:hover {
+.home-facility-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
 }
 
-.facility-card-image {
+.home-facility-card:active {
+  transform: scale(0.97);
+}
+
+.home-facility-img {
   height: 120px;
-  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   padding: 10px;
 }
 
-.facility-card-sport-badge {
+.home-facility-sport-badge {
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(4px);
   color: #fff;
   font-size: 11px;
   font-weight: 600;
   padding: 3px 8px;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
-.facility-card-rating {
-  background: rgba(255, 255, 255, 0.9);
-  color: #1A1A2E;
+.home-facility-rating {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text);
   font-size: 12px;
   font-weight: 700;
   padding: 3px 8px;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
-.facility-card-info {
+.home-facility-body {
   padding: 12px;
 }
 
-.facility-card-name {
+.home-facility-name {
   font-size: 14px;
   font-weight: 700;
-  color: #1A1A2E;
-  margin: 0 0 4px;
+  color: var(--text);
+  margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 176px;
 }
 
-.facility-card-district {
+.home-facility-district {
   font-size: 12px;
-  color: #888;
-  margin: 0 0 8px;
-}
-
-.facility-card-price {
+  color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
-.price-amount {
+.home-facility-price {
+  margin-bottom: 8px;
+}
+
+.home-price-value {
   font-size: 16px;
   font-weight: 700;
-  color: #FF6B35;
+  color: var(--primary);
 }
 
-.price-unit {
+.home-price-unit {
   font-size: 12px;
-  color: #888;
+  color: var(--text-secondary);
 }
 
-.facility-card-slots {
+.home-facility-slots {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
 }
 
-.slot-pill {
-  background: rgba(255, 107, 53, 0.1);
-  color: #FF6B35;
+.home-slot-pill {
+  background: var(--primary-light);
+  color: var(--primary);
   font-size: 11px;
   font-weight: 600;
   padding: 2px 8px;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
-/* Events List */
-.events-list {
+/* ── Events ──────────────────────────────────────────────────────────────── */
+
+.home-events-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.event-card {
+.home-event-card {
   background: #fff;
   border-radius: 14px;
   padding: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow);
   cursor: pointer;
   transition: transform 0.15s;
 }
 
-.event-card:hover {
+.home-event-card:hover {
   transform: translateY(-1px);
 }
 
-.event-card-header {
+.home-event-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
 
-.event-card-fee {
+.home-event-fee {
   font-size: 13px;
   font-weight: 700;
-  color: #1A1A2E;
+  color: var(--text);
 }
 
-.event-card-title {
+.home-event-title {
   font-size: 15px;
   font-weight: 700;
-  color: #1A1A2E;
-  margin: 0 0 4px;
+  color: var(--text);
+  margin-bottom: 4px;
 }
 
-.event-card-location {
+.home-event-location {
   font-size: 12px;
-  color: #888;
-  margin: 0 0 8px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
 }
 
-.event-card-footer {
+.home-event-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.event-card-date {
+.home-event-date {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
-.event-card-spots {
+.home-event-spots {
   font-size: 12px;
   font-weight: 600;
   color: #22c55e;
 }
 
-.spots-low {
+.home-event-spots.spots-low {
   color: #ef4444;
 }
 
-/* Quick Booking CTA */
-.quick-booking-cta {
+/* ── Quick CTA Banner ────────────────────────────────────────────────────── */
+
+.home-quick-cta {
   background: linear-gradient(135deg, #FF6B35, #F7931E);
   border-radius: 16px;
   padding: 20px;
@@ -339,36 +371,24 @@
   transition: opacity 0.2s;
 }
 
-.quick-booking-cta:hover {
+.home-quick-cta:hover {
   opacity: 0.92;
 }
 
-.quick-cta-content h3 {
+.home-quick-cta-text h3 {
   color: #fff;
   font-size: 17px;
   font-weight: 700;
-  margin: 0 0 4px;
+  margin-bottom: 4px;
 }
 
-.quick-cta-content p {
+.home-quick-cta-text p {
   color: rgba(255, 255, 255, 0.85);
   font-size: 13px;
-  margin: 0;
 }
 
-.quick-cta-arrow {
+.home-quick-cta-arrow {
   color: #fff;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 300;
-}
-
-/* Notification btn */
-.header-notification-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #1A1A2E;
-  padding: 4px;
-  display: flex;
-  align-items: center;
 }

@@ -1,9 +1,12 @@
+/* ── Facility Detail Screen ──────────────────────────────────────────────── */
+
 .facility-detail-screen {
-  background: #f8f8f8;
   min-height: 100vh;
-  padding-bottom: 90px;
+  background: var(--bg);
+  position: relative;
 }
 
+/* Transparent header floats over the hero */
 .facility-header-overlay {
   position: absolute;
   top: 0;
@@ -12,77 +15,108 @@
   z-index: 10;
 }
 
-.facility-share-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  border-radius: 10px;
-  padding: 6px;
-  cursor: pointer;
+/* When header is transparent the back button needs to be visible on dark bg */
+.facility-header-overlay .header-back {
   color: #fff;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-/* Hero */
+.facility-share-btn {
+  background: rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+
 .facility-hero {
   height: 240px;
-  position: relative;
   display: flex;
   align-items: flex-end;
-  padding: 20px;
+  padding: 24px 20px;
+  position: relative;
 }
 
-.facility-hero-content {
+/* Dark gradient overlay so text is readable */
+.facility-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.facility-hero-body {
+  position: relative;
   z-index: 1;
 }
 
 .facility-hero-sport {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
   font-size: 12px;
   font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 10px;
-  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  display: block;
+  margin-bottom: 6px;
 }
 
 .facility-hero-name {
-  color: #fff;
   font-size: 22px;
   font-weight: 800;
-  margin: 0 0 8px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
 }
 
 .facility-hero-meta {
   display: flex;
-  gap: 16px;
+  align-items: center;
+  gap: 12px;
 }
 
 .facility-hero-district,
 .facility-hero-rating {
-  color: rgba(255, 255, 255, 0.9);
   font-size: 13px;
-  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
 }
 
-/* Body */
-.facility-detail-body {
+/* ── Scrollable body ──────────────────────────────────────────────────────── */
+
+.facility-body {
   padding: 0 16px;
 }
 
-/* Quick Info */
-.facility-quick-info {
-  background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  margin: -24px 0 16px;
-  position: relative;
+/* ── Quick Strip ──────────────────────────────────────────────────────────── */
+
+.facility-quick-strip {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 16px;
 }
 
 .facility-price-block {
@@ -92,19 +126,22 @@
 }
 
 .facility-price-label {
-  font-size: 12px;
-  color: #888;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .facility-price-value {
   font-size: 22px;
   font-weight: 800;
-  color: #FF6B35;
+  color: var(--primary);
+  letter-spacing: -0.5px;
 }
 
-.facility-stats {
+.facility-stats-row {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 16px;
 }
 
 .facility-stat {
@@ -114,45 +151,50 @@
   gap: 2px;
 }
 
-.stat-num {
+.facility-stat-num {
   font-size: 20px;
   font-weight: 800;
-  color: #1A1A2E;
+  color: var(--text);
 }
 
-.stat-label {
-  font-size: 11px;
-  color: #888;
+.facility-stat-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
-/* Sections */
+.facility-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+}
+
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+
 .facility-section {
-  background: #fff;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .facility-section-title {
   font-size: 15px;
   font-weight: 700;
-  color: #1A1A2E;
-  margin: 0 0 10px;
+  color: var(--text);
+  margin-bottom: 10px;
 }
 
 .facility-address {
   font-size: 14px;
-  color: #555;
-  margin: 0;
-  line-height: 1.5;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .facility-description {
   font-size: 14px;
-  color: #555;
-  line-height: 1.6;
-  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
+
+/* ── Amenities ────────────────────────────────────────────────────────────── */
 
 .facility-amenities {
   display: flex;
@@ -160,58 +202,64 @@
   gap: 8px;
 }
 
-.amenity-badge {
-  background: rgba(255, 107, 53, 0.08);
-  color: #FF6B35;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 10px;
+.facility-amenity-badge {
+  background: var(--bg);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
 }
 
-/* Slot Grid */
-.slot-grid {
+/* ── Time Slots ───────────────────────────────────────────────────────────── */
+
+.facility-slot-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 
-.slot-btn {
+.facility-slot-btn {
   padding: 10px 4px;
-  border-radius: 10px;
-  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
   font-size: 13px;
   font-weight: 600;
+  text-align: center;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.15s;
+  border: 1.5px solid transparent;
 }
 
-.slot-available {
-  background: rgba(34, 197, 94, 0.1);
-  color: #16a34a;
-  border-color: rgba(34, 197, 94, 0.2);
+.slot--available {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
 }
 
-.slot-available:hover {
-  background: rgba(34, 197, 94, 0.2);
+.slot--available:hover {
+  background: var(--primary);
+  color: #fff;
 }
 
-.slot-unavailable {
-  background: #f5f5f5;
-  color: #ccc;
-  cursor: not-allowed;
-  border-color: transparent;
-}
-
-.slot-selected {
-  background: #FF6B35 !important;
+.slot--selected {
+  background: var(--primary) !important;
   color: #fff !important;
-  border-color: #FF6B35 !important;
+  border-color: var(--primary) !important;
 }
 
-/* Bottom CTA */
-.facility-bottom-cta {
+.slot--unavailable {
+  border-color: var(--border);
+  color: var(--text-muted);
+  background: #f9f9f9;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* ── Sticky Bottom CTA ────────────────────────────────────────────────────── */
+
+.facility-cta-bar {
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -219,13 +267,13 @@
   width: 100%;
   max-width: 430px;
   background: #fff;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
   padding: 12px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  border-top: 1px solid #f0f0f0;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
   z-index: 50;
 }
 
@@ -235,70 +283,74 @@
   gap: 2px;
 }
 
-.cta-selected-time {
+.facility-cta-time {
   font-size: 13px;
-  color: #888;
+  font-weight: 600;
+  color: var(--text);
 }
 
-.cta-price {
+.facility-cta-price {
   font-size: 18px;
   font-weight: 800;
-  color: #FF6B35;
+  color: var(--primary);
+  letter-spacing: -0.5px;
 }
 
-.cta-hint {
-  font-size: 14px;
-  color: #aaa;
+.facility-cta-hint {
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
-.cta-btn {
+.facility-cta-btn {
   padding: 14px 28px;
-  border-radius: 14px;
-  border: none;
+  border-radius: var(--radius-sm);
   font-size: 15px;
   font-weight: 700;
-  cursor: pointer;
   font-family: inherit;
-  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
   white-space: nowrap;
 }
 
-.cta-btn-active {
-  background: #FF6B35;
+.cta-btn--active {
+  background: var(--primary);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
 
-.cta-btn-active:hover {
-  background: #e85d2a;
+.cta-btn--active:hover {
+  background: var(--primary-dark);
 }
 
-.cta-btn-disabled {
-  background: #f0f0f0;
-  color: #aaa;
+.cta-btn--disabled {
+  background: var(--border);
+  color: var(--text-muted);
   cursor: not-allowed;
 }
 
-/* Not Found */
+/* ── 404 ──────────────────────────────────────────────────────────────────── */
+
 .facility-not-found {
-  min-height: 100vh;
-  background: #f8f8f8;
-}
-
-.not-found-content {
-  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 14px;
   text-align: center;
-  color: #888;
 }
 
-.back-to-search {
-  margin-top: 16px;
-  background: #FF6B35;
+.facility-not-found-icon {
+  font-size: 52px;
+}
+
+.facility-not-found-btn {
+  background: var(--primary);
   color: #fff;
   border: none;
+  border-radius: var(--radius-sm);
   padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;

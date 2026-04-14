@@ -4,12 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#FF6B35" />
+    <meta name="description" content="피코 - 서울 피클볼 코트 예약 플랫폼" />
     <title>피코 | 스포츠 코트 예약</title>
+
+    <!-- Google Fonts: Noto Sans KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- TODO: [Kakao Map] Replace KAKAO_JS_KEY_PLACEHOLDER with your real Kakao JavaScript App Key from https://developers.kakao.com -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=KAKAO_JS_KEY_PLACEHOLDER&libraries=services" onerror="window.__kakaoMapLoadFailed=true"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      TODO: [Kakao Map] Replace KAKAO_JS_KEY_PLACEHOLDER below with your real
+      Kakao JavaScript App Key.
+
+      Steps:
+        1. Go to https://developers.kakao.com
+        2. Create an application (or select existing)
+        3. Go to: App Keys → JavaScript Key
+        4. Under "Web Platform", add your deployed domain (e.g. wjetwtwj.gensparkclaw.com)
+        5. Replace KAKAO_JS_KEY_PLACEHOLDER in the script src below with your key
+
+      The onerror handler sets window.__kakaoMapFailed = true so the React
+      component can gracefully show a fallback UI instead of crashing.
+    -->
+    <script>
+      window.__kakaoMapFailed = false;
+    </script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=KAKAO_JS_KEY_PLACEHOLDER&libraries=services"
+      onerror="window.__kakaoMapFailed = true"
+    ></script>
   </head>
   <body>
     <div id="root"></div>
