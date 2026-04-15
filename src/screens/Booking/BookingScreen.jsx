@@ -1,9 +1,17 @@
-// TODO: [KakaoPay] Implement real payment by:
-//   1. POST /api/kakaopay/ready  → { tid, next_redirect_mobile_url }
-//   2. Redirect user to next_redirect_mobile_url (Kakao payment page)
-//   3. On return, POST /api/kakaopay/approve  → { payment_method_type, amount }
-//   4. Store confirmed booking server-side
-// TODO: [Backend API] POST /api/bookings — persist confirmed booking
+/**
+ * BookingScreen — 4-step booking flow with real KakaoPay integration.
+ *
+ * Payment flow:
+ *   Step 3 (결제) → user taps "카카오페이로 결제" →
+ *     POST /api/kakaopay/ready  → { next_redirect_mobile_url }
+ *     window.location.href = next_redirect_mobile_url   (Kakao payment page)
+ *     [User approves on Kakao]
+ *     Kakao redirects → GET /api/kakaopay/success?orderId=...&pg_token=...
+ *     Server calls /approve, then redirects → /booking-confirm?orderId=...&tid=...&amount=...
+ *
+ * Demo payment (fallback):
+ *   Skips KakaoPay entirely — simulates processing delay then creates booking.
+ */
 
 import { useState } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
@@ -15,16 +23,16 @@ import './BookingScreen.css'
 
 const STEPS = ['날짜', '시간', '인원', '결제']
 
-// Returns an array of Date objects for the current month starting from today.
 function getBookableDays() {
-  const days = []
+  const days  = []
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-  const end = new Date(today.getFullYear(), today.getMonth() + 2, 0) // end of next month
-  for (let d = new Date(today); d <= end; d.setDate(d.getDate() + 1)) {
-    days.push(new Date(d))
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(today)
+    d.setDate(today.getDate() + i)
+    days.push(d)
   }
-  return days.slice(0, 30) // show 30 days max
+  return days
 }
 
 function toDateString(d) {
@@ -38,17 +46,15 @@ function toDateString(d) {
 
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토']
 
-// ── Step components ───────────────────────────────────────────────────────────
-
+// ── Step 1: Date ──────────────────────────────────────────────────────────────
 function StepDate({ days, selectedDate, onSelect, onNext }) {
   return (
     <div className="booking-step-content">
       <h2 className="booking-step-title">날짜를 선택하세요</h2>
       <div className="booking-date-chips">
         {days.map((day) => {
-          const isSelected =
-            selectedDate && day.toDateString() === selectedDate.toDateString()
-          const isToday = day.toDateString() === new Date().toDateString()
+          const isSelected = selectedDate?.toDateString() === day.toDateString()
+          const isToday    = day.toDateString() === new Date().toDateString()
           return (
             <button
               key={day.toISOString()}
@@ -62,17 +68,14 @@ function StepDate({ days, selectedDate, onSelect, onNext }) {
           )
         })}
       </div>
-      <button
-        className="booking-next-btn"
-        disabled={!selectedDate}
-        onClick={onNext}
-      >
+      <button className="booking-next-btn" disabled={!selectedDate} onClick={onNext}>
         다음
       </button>
     </div>
   )
 }
 
+// ── Step 2: Time ──────────────────────────────────────────────────────────────
 function StepTime({ slots, selectedDate, selectedTime, onSelect, onBack, onNext }) {
   return (
     <div className="booking-step-content">
@@ -91,49 +94,30 @@ function StepTime({ slots, selectedDate, selectedTime, onSelect, onBack, onNext 
             onClick={() => onSelect(slot.time)}
           >
             <span className="booking-time-label">{slot.time}</span>
-            <span className="booking-time-status">
-              {slot.available ? '가능' : '마감'}
-            </span>
+            <span className="booking-time-status">{slot.available ? '가능' : '마감'}</span>
           </button>
         ))}
       </div>
       <div className="booking-nav-row">
         <button className="booking-back-btn" onClick={onBack}>이전</button>
-        <button
-          className="booking-next-btn-sm"
-          disabled={!selectedTime}
-          onClick={onNext}
-        >
-          다음
-        </button>
+        <button className="booking-next-btn-sm" disabled={!selectedTime} onClick={onNext}>다음</button>
       </div>
     </div>
   )
 }
 
+// ── Step 3: Players ───────────────────────────────────────────────────────────
 function StepPlayers({ players, price, onDecrement, onIncrement, onBack, onNext }) {
   return (
     <div className="booking-step-content">
       <h2 className="booking-step-title">참여 인원을 선택하세요</h2>
       <div className="booking-players-selector">
-        <button
-          className="players-btn"
-          onClick={onDecrement}
-          disabled={players <= 1}
-        >
-          −
-        </button>
+        <button className="players-btn" onClick={onDecrement} disabled={players <= 1}>−</button>
         <div className="players-display">
           <span className="players-num">{players}</span>
           <span className="players-unit">명</span>
         </div>
-        <button
-          className="players-btn"
-          onClick={onIncrement}
-          disabled={players >= 8}
-        >
-          +
-        </button>
+        <button className="players-btn" onClick={onIncrement} disabled={players >= 8}>+</button>
       </div>
       <p className="players-hint">피클볼 코트는 최대 4명이 적합합니다</p>
       <p className="players-total">
@@ -147,7 +131,9 @@ function StepPlayers({ players, price, onDecrement, onIncrement, onBack, onNext 
   )
 }
 
-function StepPayment({ facility, selectedDate, selectedTime, players, isProcessing, onBack, onPay }) {
+// ── Step 4: Payment ───────────────────────────────────────────────────────────
+function StepPayment({ facility, selectedDate, selectedTime, players, orderId,
+                        isProcessing, payMethod, onSelectMethod, onBack, onPay }) {
   return (
     <div className="booking-step-content">
       <h2 className="booking-step-title">예약 확인 및 결제</h2>
@@ -173,54 +159,59 @@ function StepPayment({ facility, selectedDate, selectedTime, players, isProcessi
         <div className="summary-divider" />
         <div className="summary-row summary-row--total">
           <span className="summary-label">결제 금액</span>
-          <span className="summary-value summary-total">
-            {facility.price.toLocaleString()}원
-          </span>
+          <span className="summary-value summary-total">{facility.price.toLocaleString()}원</span>
         </div>
       </div>
 
-      {/* Payment Methods */}
+      {/* Payment Method Selector */}
       <div className="payment-section">
-        <h3 className="payment-section-title">결제 수단</h3>
+        <h3 className="payment-section-title">결제 수단 선택</h3>
 
-        {/* Demo Payment — active for MVP */}
-        <div className="payment-option payment-option--selected">
-          <span className="payment-option-icon">💳</span>
-          <span className="payment-option-label">데모 결제</span>
-          <Badge variant="demo" size="sm">DEMO</Badge>
-        </div>
-
-        {/*
-          TODO: [KakaoPay] Uncomment and wire up when integrating real payment.
-          On click:
-            const res = await fetch('/api/kakaopay/ready', {
-              method: 'POST',
-              body: JSON.stringify({ amount: facility.price, orderId: bookingId, itemName: facility.name })
-            })
-            const { next_redirect_mobile_url } = await res.json()
-            window.location.href = next_redirect_mobile_url
-        */}
-        <div className="payment-option payment-option--disabled">
+        {/* KakaoPay */}
+        <button
+          className={`payment-option ${payMethod === 'kakaopay' ? 'payment-option--selected' : ''}`}
+          onClick={() => onSelectMethod('kakaopay')}
+        >
           <span className="payment-option-icon">💬</span>
-          <span className="payment-option-label">카카오페이</span>
-          <Badge variant="warning" size="sm">준비중</Badge>
-        </div>
+          <div className="payment-option-text">
+            <span className="payment-option-label">카카오페이</span>
+            <span className="payment-option-sub">카카오 간편결제</span>
+          </div>
+          {payMethod === 'kakaopay' && <span className="payment-check">✓</span>}
+        </button>
+
+        {/* Demo */}
+        <button
+          className={`payment-option ${payMethod === 'demo' ? 'payment-option--selected' : ''}`}
+          onClick={() => onSelectMethod('demo')}
+        >
+          <span className="payment-option-icon">💳</span>
+          <div className="payment-option-text">
+            <span className="payment-option-label">데모 결제</span>
+            <span className="payment-option-sub">테스트용 — 실제 결제 없음</span>
+          </div>
+          <Badge variant="demo" size="sm">DEMO</Badge>
+          {payMethod === 'demo' && <span className="payment-check">✓</span>}
+        </button>
       </div>
+
+      {payMethod === 'kakaopay' && (
+        <p className="payment-kakaopay-notice">
+          ⚠️ 카카오 테스트 결제 모드 (실제 금액 청구 없음)
+        </p>
+      )}
 
       <div className="booking-nav-row">
-        <button className="booking-back-btn" onClick={onBack} disabled={isProcessing}>
-          이전
-        </button>
+        <button className="booking-back-btn" onClick={onBack} disabled={isProcessing}>이전</button>
         <button
-          className="booking-pay-btn"
+          className={`booking-pay-btn ${payMethod === 'kakaopay' ? 'booking-pay-btn--kakao' : ''}`}
           onClick={onPay}
-          disabled={isProcessing}
+          disabled={isProcessing || !payMethod}
         >
           {isProcessing ? (
-            <span className="pay-spinner-row">
-              <span className="pay-spinner" />
-              결제 중...
-            </span>
+            <span className="pay-spinner-row"><span className="pay-spinner" />처리 중...</span>
+          ) : payMethod === 'kakaopay' ? (
+            '카카오페이로 결제'
           ) : (
             `${facility.price.toLocaleString()}원 결제하기`
           )}
@@ -230,25 +221,30 @@ function StepPayment({ facility, selectedDate, selectedTime, players, isProcessi
   )
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
-
+// ── Main ──────────────────────────────────────────────────────────────────────
 export default function BookingScreen() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { id }       = useParams()
+  const navigate     = useNavigate()
+  const location     = useLocation()
   const { createBooking } = useBooking()
 
   const facility = getFacilityById(id)
 
-  const [step,          setStep]          = useState(0)
-  const [selectedDate,  setSelectedDate]  = useState(null)
-  const [selectedTime,  setSelectedTime]  = useState(location.state?.selectedTime ?? null)
-  const [players,       setPlayers]       = useState(2)
-  const [isProcessing,  setIsProcessing]  = useState(false)
+  const [step,         setStep]         = useState(0)
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedTime, setSelectedTime] = useState(location.state?.selectedTime ?? null)
+  const [players,      setPlayers]      = useState(2)
+  const [payMethod,    setPayMethod]    = useState('kakaopay')
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [error,        setError]        = useState(null)
 
   const days = getBookableDays()
 
-  // ── 404 guard ──────────────────────────────────────────────────────────────
+  // Stable orderId for this booking session
+  const [orderId] = useState(() =>
+    `PIKKO-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`
+  )
+
   if (!facility) {
     return (
       <div>
@@ -258,18 +254,73 @@ export default function BookingScreen() {
     )
   }
 
+  // ── Payment handler ─────────────────────────────────────────────────────────
   const handlePay = async () => {
+    setError(null)
     setIsProcessing(true)
-    // Demo payment: simulate a short processing delay then create booking.
+
+    // ── KakaoPay real payment ─────────────────────────────────────────────────
+    if (payMethod === 'kakaopay') {
+      try {
+        const res = await fetch('/api/kakaopay/ready', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId,
+            userId:   'u1',          // TODO: [Auth] use real user ID from AuthContext
+            itemName: `${facility.name} 코트 예약 ${toDateString(selectedDate)} ${selectedTime}`,
+            amount:   facility.price,
+          }),
+        })
+
+        const data = await res.json()
+
+        if (!res.ok) {
+          throw new Error(data.error || '카카오페이 요청에 실패했습니다')
+        }
+
+        // Save partial booking to localStorage so BookingConfirmScreen can display it
+        // after Kakao redirects back. The server-side /success handler does the real confirm.
+        const pending = {
+          orderId,
+          facilityId:       facility.id,
+          facilityName:     facility.name,
+          facilityDistrict: facility.district,
+          facilityAddress:  facility.address,
+          date:             toDateString(selectedDate),
+          time:             selectedTime,
+          players,
+          amount:           facility.price,
+          payMethod:        'kakaopay',
+        }
+        localStorage.setItem('pikko_pending_booking', JSON.stringify(pending))
+
+        // Redirect to KakaoPay — works on both mobile and desktop
+        const isMobile = /iPhone|Android/i.test(navigator.userAgent)
+        window.location.href = isMobile
+          ? data.next_redirect_mobile_url
+          : data.next_redirect_pc_url
+
+      } catch (err) {
+        console.error('[KakaoPay]', err)
+        setError(err.message || '결제 요청 중 오류가 발생했습니다. 다시 시도해 주세요.')
+        setIsProcessing(false)
+      }
+      return
+    }
+
+    // ── Demo payment ──────────────────────────────────────────────────────────
     await new Promise((r) => setTimeout(r, 1400))
     const booking = createBooking({
       facilityId:       facility.id,
       facilityName:     facility.name,
       facilityDistrict: facility.district,
+      facilityAddress:  facility.address,
       date:             toDateString(selectedDate),
       time:             selectedTime,
       players,
       amount:           facility.price,
+      payMethod:        'demo',
     })
     navigate('/booking-confirm', { state: { booking, facility } })
   }
@@ -278,34 +329,28 @@ export default function BookingScreen() {
     <div className="booking-screen">
       <Header showBack title="예약하기" />
 
-      {/* ── Step Indicator ── */}
+      {/* Step Indicator */}
       <div className="booking-steps">
         {STEPS.map((label, i) => (
           <div key={label} className="booking-step-item">
-            <div
-              className={[
-                'booking-step-dot',
-                i === step ? 'step-dot--active' : '',
-                i < step  ? 'step-dot--done'   : '',
-              ].join(' ')}
-            >
+            <div className={[
+              'booking-step-dot',
+              i === step ? 'step-dot--active' : '',
+              i <  step ? 'step-dot--done'   : '',
+            ].join(' ')}>
               {i < step ? '✓' : i + 1}
             </div>
-            <span
-              className={`booking-step-label ${i === step ? 'step-label--active' : ''}`}
-            >
+            <span className={`booking-step-label ${i === step ? 'step-label--active' : ''}`}>
               {label}
             </span>
             {i < STEPS.length - 1 && (
-              <div
-                className={`booking-step-line ${i < step ? 'step-line--done' : ''}`}
-              />
+              <div className={`booking-step-line ${i < step ? 'step-line--done' : ''}`} />
             )}
           </div>
         ))}
       </div>
 
-      {/* ── Facility Strip ── */}
+      {/* Facility Strip */}
       <div className="booking-facility-strip">
         <div>
           <p className="booking-facility-name">{facility.name}</p>
@@ -316,7 +361,14 @@ export default function BookingScreen() {
         <Badge variant="primary" size="sm">피클볼</Badge>
       </div>
 
-      {/* ── Step Content ── */}
+      {/* Error Banner */}
+      {error && (
+        <div className="booking-error-banner">
+          ⚠️ {error}
+        </div>
+      )}
+
+      {/* Step Content */}
       <div className="booking-content">
         {step === 0 && (
           <StepDate
@@ -352,7 +404,10 @@ export default function BookingScreen() {
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             players={players}
+            orderId={orderId}
             isProcessing={isProcessing}
+            payMethod={payMethod}
+            onSelectMethod={setPayMethod}
             onBack={() => setStep(2)}
             onPay={handlePay}
           />

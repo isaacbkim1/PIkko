@@ -421,11 +421,49 @@
   font-size: 22px;
 }
 
-.payment-option-label {
+.payment-option-text {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.payment-option-label {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
+}
+
+.payment-option-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.payment-check {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.payment-kakaopay-notice {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: -4px 0 12px;
+  padding: 8px 12px;
+  background: rgba(255, 184, 0, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.booking-error-banner {
+  margin: 0 16px 8px;
+  padding: 12px 14px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--danger);
+  font-weight: 500;
 }
 
 /* ── Navigation buttons ───────────────────────────────────────────────────── */
@@ -492,6 +530,15 @@
   background: var(--border);
   color: var(--text-muted);
   cursor: not-allowed;
+}
+
+.booking-pay-btn--kakao {
+  background: #FEE500 !important;
+  color: #191919 !important;
+}
+
+.booking-pay-btn--kakao:not(:disabled):hover {
+  background: #F0D900 !important;
 }
 
 .booking-pay-btn {
