@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { facilities as allFacilities } from '../../data/facilities'
 import './KakaoMap.css'
 
@@ -14,8 +15,22 @@ export default function KakaoMap({
   height = 260,
   onFacilityClick,
 }) {
-  const mapRef   = useRef(null)
+  const mapRef    = useRef(null)
+  const navigate  = useNavigate()
   const [mapState, setMapState] = useState('loading') // 'loading' | 'ready' | 'error'
+
+  // Handle clicks on InfoWindow "예약하기" buttons (rendered as raw HTML by Kakao)
+  useEffect(() => {
+    const handleInfoClick = (e) => {
+      const btn = e.target.closest('[data-pikko-facility]')
+      if (btn) {
+        const id = btn.getAttribute('data-pikko-facility')
+        navigate(`/facility/${id}`)
+      }
+    }
+    document.addEventListener('click', handleInfoClick)
+    return () => document.removeEventListener('click', handleInfoClick)
+  }, [navigate])
 
   useEffect(() => {
     let cancelled  = false
@@ -38,24 +53,37 @@ export default function KakaoMap({
           const position = new window.kakao.maps.LatLng(facility.lat, facility.lng)
           const marker   = new window.kakao.maps.Marker({ map, position, title: facility.name })
 
+          // Build InfoWindow — button uses a data-id so we can intercept
+          // the click via a document-level listener and avoid full-page nav.
           const infoContent = `
             <div style="
-              padding:10px 14px;
+              padding:12px 14px;
               font-size:13px;
               font-family:'Noto Sans KR',sans-serif;
-              min-width:150px;
+              min-width:160px;
               line-height:1.5;
             ">
-              <strong style="display:block;margin-bottom:2px;color:#1A1A2E;">
+              <strong style="display:block;margin-bottom:2px;color:#1A1A2E;font-size:14px;">
                 ${facility.name}
               </strong>
-              <span style="color:#888;display:block;margin-bottom:6px;">
+              <span style="color:#888;display:block;margin-bottom:8px;">
                 ${facility.price.toLocaleString()}원/시간 &nbsp;⭐ ${facility.rating}
               </span>
-              <a href="/facility/${facility.id}"
-                style="color:#FF6B35;font-weight:700;text-decoration:none;">
-                예약하기 →
-              </a>
+              <button
+                data-pikko-facility="${facility.id}"
+                style="
+                  background:#FF6B35;
+                  color:#fff;
+                  border:none;
+                  border-radius:8px;
+                  padding:7px 16px;
+                  font-size:13px;
+                  font-weight:700;
+                  cursor:pointer;
+                  font-family:'Noto Sans KR',sans-serif;
+                  width:100%;
+                "
+              >예약하기 →</button>
             </div>`
 
           const infoWindow = new window.kakao.maps.InfoWindow({ content: infoContent })
