@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
+import PikkoBall from "../../components/UI/PikkoBall";
 
 const SEOUL_DISTRICTS = [
   "강남구", "강동구", "강북구", "강서구", "관악구",
@@ -46,7 +47,9 @@ export default function SignupScreen() {
     <div className="auth-screen">
       <div className="auth-container">
         <div className="auth-logo">
-          <div className="auth-logo-icon">🏓</div>
+          <div className="auth-logo-icon" style={{background:'linear-gradient(135deg,#1A1A2E,#2A2A5E)',borderRadius:'16px',padding:'8px',display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <PikkoBall size={44} />
+          </div>
           <h1 className="auth-logo-text">Pikko 회원가입</h1>
           <p className="auth-logo-sub">서울 스포츠 코트 예약을 시작하세요</p>
         </div>

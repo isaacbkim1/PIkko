@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import PikkoBall from '../UI/PikkoBall'
 import './Header.css'
 
 /**
@@ -43,8 +44,8 @@ export default function Header({
           </button>
         ) : (
           <div className="header-logo" onClick={() => navigate('/')}>
+            <PikkoBall size={28} />
             <span className="header-logo-text">Pikko</span>
-            <span className="header-logo-dot">●</span>
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
+import PikkoBall from "../../components/UI/PikkoBall";
 import "./LoginScreen.css";
 
 export default function LoginScreen() {
@@ -32,7 +33,9 @@ export default function LoginScreen() {
 
       {/* ── Logo area ── */}
       <div className="login-logo-area">
-        <div className="login-logo-icon">P</div>
+        <div className="login-logo-icon">
+          <PikkoBall size={52} />
+        </div>
         <h1 className="login-logo-text">Pikko</h1>
         <p className="login-logo-sub">Korea Public Sports Access Platform</p>
       </div>

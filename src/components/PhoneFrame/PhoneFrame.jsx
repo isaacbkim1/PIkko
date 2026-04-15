@@ -9,6 +9,7 @@
  */
 
 import { useState, useEffect } from 'react'
+import PikkoBall from '../UI/PikkoBall'
 import './PhoneFrame.css'
 
 const FEATURES = [
@@ -86,7 +87,7 @@ export default function PhoneFrame() {
       {/* ── Top nav ── */}
       <nav className="pf-nav">
         <div className="pf-nav-logo">
-          <span className="pf-nav-icon pf-nav-icon--logo">P</span>
+          <PikkoBall size={28} className="pf-nav-icon" />
           <span className="pf-nav-brand">Pikko</span>
         </div>
         <div className="pf-nav-links">
@@ -147,7 +148,9 @@ export default function PhoneFrame() {
         <div className="pf-info">
           {/* App identity */}
           <div className="pf-app-id">
-            <div className="pf-app-avatar">P</div>
+            <div className="pf-app-avatar">
+              <PikkoBall size={34} />
+            </div>
             <div>
               <p className="pf-app-name">Pikko</p>
               <p className="pf-app-sub">Korea Public Sports Access Platform</p>
