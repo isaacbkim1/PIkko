@@ -47,7 +47,7 @@ export default function SignupScreen() {
       <div className="auth-container">
         <div className="auth-logo">
           <div className="auth-logo-icon">🏓</div>
-          <h1 className="auth-logo-text">피코 회원가입</h1>
+          <h1 className="auth-logo-text">Pikko 회원가입</h1>
           <p className="auth-logo-sub">서울 스포츠 코트 예약을 시작하세요</p>
         </div>
 

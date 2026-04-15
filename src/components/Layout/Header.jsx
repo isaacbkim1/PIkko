@@ -43,7 +43,7 @@ export default function Header({
           </button>
         ) : (
           <div className="header-logo" onClick={() => navigate('/')}>
-            <span className="header-logo-text">피코</span>
+            <span className="header-logo-text">Pikko</span>
             <span className="header-logo-dot">●</span>
           </div>
         )}

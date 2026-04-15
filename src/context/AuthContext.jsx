@@ -5,7 +5,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 
 const demoUser = {
   id: 'u1',
-  name: '김민준',
+  name: 'JungHyun Heo',
   email: 'demo@pikko.kr',
   password: 'demo1234',
   district: '강남구',

@@ -1,0 +1,211 @@
+/* ── Booking Ticket ──────────────────────────────────────────────────────── */
+
+.ticket {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  width: 100%;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+
+.ticket-header {
+  background: var(--navy);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-logo {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.ticket-badge {
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+}
+
+/* ── Facility ─────────────────────────────────────────────────────────────── */
+
+.ticket-facility {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.ticket-facility-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.ticket-facility-addr {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── Details grid ─────────────────────────────────────────────────────────── */
+
+.ticket-details {
+  padding: 12px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ticket-detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ticket-detail-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.ticket-detail-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ticket-amount {
+  color: var(--primary);
+  font-size: 16px;
+}
+
+/* ── Perforation ──────────────────────────────────────────────────────────── */
+
+.ticket-perforation {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0;
+}
+
+.ticket-perforation-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.ticket-perforation-circle--left  { margin-left: -12px; }
+.ticket-perforation-circle--right { margin-right: -12px; }
+
+.ticket-perforation-line {
+  flex: 1;
+  border-top: 2px dashed var(--border);
+}
+
+/* ── QR Section ───────────────────────────────────────────────────────────── */
+
+.ticket-qr-section {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ticket-qr-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: center;
+}
+
+.ticket-qr-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.ticket-qr-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.ticket-qr-canvas {
+  display: block;
+  border-radius: 8px;
+  transition: opacity 0.3s;
+}
+
+/* ── Barcode ──────────────────────────────────────────────────────────────── */
+
+.ticket-barcode {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.barcode-stripes {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 48px;
+  width: 100%;
+  max-width: 260px;
+}
+
+.barcode-bar {
+  flex: 1;
+  background: var(--navy);
+  height: 70%;
+  border-radius: 1px 1px 0 0;
+}
+
+.barcode-bar--wide {
+  flex: 2;
+}
+
+.barcode-bar--tall {
+  height: 100%;
+}
+
+.ticket-barcode-num {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Scan hint ────────────────────────────────────────────────────────────── */
+
+.ticket-scan-hint {
+  font-size: 12px;
+  font-weight: 600;
+  color: #10B981;
+  text-align: center;
+}

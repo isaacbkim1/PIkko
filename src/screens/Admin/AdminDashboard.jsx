@@ -21,7 +21,7 @@ const STATS = [
 ]
 
 const RECENT_BOOKINGS = [
-  { id: 'RB001', facility: '강남 피클볼 아레나', user: '김민준', time: '09:00', amount: 50000, status: 'confirmed' },
+  { id: 'RB001', facility: '강남 피클볼 아레나', user: 'JungHyun Heo', time: '09:00', amount: 50000, status: 'confirmed' },
   { id: 'RB002', facility: '마포 스포츠센터',    user: '이지영', time: '11:00', amount: 30000, status: 'confirmed' },
   { id: 'RB003', facility: '송파 올림픽장',      user: '박성호', time: '14:00', amount: 45000, status: 'completed' },
   { id: 'RB004', facility: '서초 한강 클럽',     user: '최나영', time: '16:00', amount: 28000, status: 'cancelled' },

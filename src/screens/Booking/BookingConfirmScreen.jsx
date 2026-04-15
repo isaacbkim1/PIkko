@@ -5,6 +5,8 @@
  *   A) Demo payment  — arrives via React Router navigate() with location.state = { booking, facility }
  *   B) KakaoPay real — arrives via server redirect to /booking-confirm?orderId=...&tid=...&amount=...
  *      In this case we read the pending booking from localStorage (set before the redirect).
+ *
+ * After confirming, shows a scannable QR + barcode ticket the user can present at the facility.
  */
 
 import { useEffect, useState } from 'react'
@@ -12,6 +14,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useBooking } from '../../context/BookingContext'
 import Header from '../../components/Layout/Header'
 import Badge from '../../components/UI/Badge'
+import BookingTicket from '../../components/UI/BookingTicket'
 import './BookingConfirmScreen.css'
 
 export default function BookingConfirmScreen() {
@@ -20,10 +23,11 @@ export default function BookingConfirmScreen() {
   const [searchParams] = useSearchParams()
   const { createBooking } = useBooking()
 
-  const [booking,  setBooking]  = useState(null)
-  const [facility, setFacility] = useState(null)
-  const [visible,  setVisible]  = useState(false)
-  const [payInfo,  setPayInfo]  = useState(null)
+  const [booking,     setBooking]     = useState(null)
+  const [facility,    setFacility]    = useState(null)
+  const [visible,     setVisible]     = useState(false)
+  const [payInfo,     setPayInfo]     = useState(null)
+  const [showTicket,  setShowTicket]  = useState(false)
 
   useEffect(() => {
     // ── Path A: demo payment via React Router state ──────────────────────────
@@ -46,7 +50,6 @@ export default function BookingConfirmScreen() {
         try {
           const pending = JSON.parse(raw)
           if (pending.orderId === orderId) {
-            // Create the confirmed booking record
             const confirmed = createBooking({
               facilityId:       pending.facilityId,
               facilityName:     pending.facilityName,
@@ -75,7 +78,7 @@ export default function BookingConfirmScreen() {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // No booking data at all → redirect guard
+  // Guard: no booking and no orderId query param
   if (!booking && !searchParams.get('orderId')) {
     return (
       <div className="confirm-screen">
@@ -91,7 +94,7 @@ export default function BookingConfirmScreen() {
     )
   }
 
-  // Still resolving (KakaoPay path, brief moment)
+  // Still resolving KakaoPay redirect
   if (!booking) {
     return (
       <div className="confirm-screen">
@@ -104,7 +107,7 @@ export default function BookingConfirmScreen() {
     )
   }
 
-  const isKakaoPay = booking.payMethod === 'kakaopay' || payInfo?.tid
+  const isKakaoPay = booking.payMethod === 'kakaopay' || !!payInfo?.tid
 
   return (
     <div className="confirm-screen">
@@ -112,7 +115,7 @@ export default function BookingConfirmScreen() {
 
       <div className={`confirm-content ${visible ? 'confirm-content--visible' : ''}`}>
 
-        {/* Success Circle */}
+        {/* ── Success circle ── */}
         <div className="confirm-success-circle" aria-hidden="true">
           <span className="confirm-check">✓</span>
         </div>
@@ -120,13 +123,13 @@ export default function BookingConfirmScreen() {
         <h1 className="confirm-title">예약이 완료되었습니다!</h1>
         <p className="confirm-sub">예약 확인서가 이메일로 발송됩니다</p>
 
-        {/* Booking Reference */}
+        {/* ── Booking reference ── */}
         <div className="confirm-ref-card">
           <span className="confirm-ref-label">예약 번호</span>
           <span className="confirm-ref-num">{booking.ref || booking.id}</span>
         </div>
 
-        {/* Details */}
+        {/* ── Details card ── */}
         <div className="confirm-details-card">
           <div className="confirm-detail-row">
             <span className="detail-label">시설</span>
@@ -179,7 +182,33 @@ export default function BookingConfirmScreen() {
           )}
         </div>
 
-        {/* Actions */}
+        {/* ── QR / Barcode Ticket ── */}
+        <div className="confirm-ticket-section">
+          <button
+            className="confirm-ticket-toggle"
+            onClick={() => setShowTicket((v) => !v)}
+          >
+            {showTicket ? '🎫 입장권 닫기' : '🎫 QR 입장권 보기'}
+          </button>
+
+          {showTicket && (
+            <div className="confirm-ticket-wrapper">
+              <BookingTicket
+                booking={{ ...booking, ref: booking.ref || booking.id }}
+                facility={facility || {
+                  name:     booking.facilityName,
+                  district: booking.facilityDistrict,
+                  address:  booking.facilityAddress,
+                }}
+              />
+              <p className="confirm-ticket-hint">
+                📱 현장 스탭에게 QR코드를 보여주세요
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ── Actions ── */}
         <div className="confirm-actions">
           <button className="confirm-btn-primary" onClick={() => navigate('/my-bookings')}>
             내 예약 보기

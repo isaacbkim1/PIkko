@@ -137,7 +137,7 @@ export default function HomeScreen() {
               안녕하세요, {user?.name?.split('')[0] ?? '게스트'}님 👋
             </p>
             <h1 className="home-hero-title">
-              피코와 함께<br />
+              Pikko와 함께<br />
               <span className="home-hero-highlight">코트를 예약</span>하세요
             </h1>
             <p className="home-hero-sub">서울 전 지역 피클볼 코트를 한 번에</p>

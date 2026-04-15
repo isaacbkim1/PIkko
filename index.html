@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#FF6B35" />
     <meta name="description" content="피코 - 서울 피클볼 코트 예약 플랫폼" />
-    <title>피코 | 스포츠 코트 예약</title>
+    <title>Pikko | 스포츠 코트 예약</title>
 
     <!-- Google Fonts: Noto Sans KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,10 +31,12 @@
     -->
     <script>
       window.__kakaoMapFailed = false;
+      window.__kakaoMapReady = false;
     </script>
     <script
       type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cf68fa163de5052959d09523518d941&libraries=services"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cf68fa163de5052959d09523518d941&libraries=services&autoload=false"
+      onload="kakao.maps.load(function(){ window.__kakaoMapReady = true; })"
       onerror="window.__kakaoMapFailed = true"
     ></script>
   </head>

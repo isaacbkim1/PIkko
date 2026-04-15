@@ -36,7 +36,7 @@ export default function LoginScreen() {
         {/* Logo */}
         <div className="auth-logo">
           <div className="auth-logo-icon">🏓</div>
-          <h1 className="auth-logo-text">피코</h1>
+          <h1 className="auth-logo-text">Pikko</h1>
           <p className="auth-logo-sub">스포츠 코트 예약 플랫폼</p>
         </div>
 
