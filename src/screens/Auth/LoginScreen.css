@@ -1,0 +1,225 @@
+/* ── Login Screen ─────────────────────────────────────────────────────────── */
+
+.login-screen {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 20px 32px;
+  gap: 20px;
+}
+
+/* ── Logo ─────────────────────────────────────────────────────────────────── */
+
+.login-logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.login-logo-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #FF6B35, #c94b15);
+  color: #fff;
+  font-size: 28px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+}
+
+.login-logo-text {
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.login-logo-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  text-align: center;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.login-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 390px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+/* ── Role Tabs ────────────────────────────────────────────────────────────── */
+
+.login-role-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.login-role-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: #fff;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.login-role-tab--active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+.role-tab-icon {
+  font-size: 18px;
+}
+
+/* ── Fields ───────────────────────────────────────────────────────────────── */
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text);
+  background: #F8F9FB;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--navy);
+  background: #fff;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+
+.login-btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.15s;
+  margin-top: 4px;
+}
+
+.login-btn-primary:hover:not(:disabled) { opacity: 0.88; }
+.login-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.login-or {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.login-kakao-wrapper {
+  position: relative;
+}
+
+.login-btn-kakao {
+  width: 100%;
+  padding: 14px;
+  background: #FEE500;
+  color: #191919;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: not-allowed;
+  font-family: inherit;
+  opacity: 0.85;
+}
+
+.login-coming-soon {
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+}
+
+.login-error {
+  font-size: 13px;
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.08);
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ── Demo hint ────────────────────────────────────────────────────────────── */
+
+.login-demo-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+}
+
+.login-demo-link {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: underline;
+  padding: 0;
+}
