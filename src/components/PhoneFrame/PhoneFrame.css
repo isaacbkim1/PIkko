@@ -55,14 +55,14 @@
 /* ── Left half: dark, phone centered ────────────────────────────────────── */
 
 .pf-col-phone {
-  flex: 1;
+  flex: 0 0 58%;           /* wider left column for the phone */
   background: #1E2035;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   gap: 14px;
-  padding: 16px 32px 24px;
+  padding: 16px 40px 24px;
 }
 
 .pf-phone {
@@ -177,12 +177,12 @@
 /* ── Right half: light, info panel ──────────────────────────────────────── */
 
 .pf-col-info {
-  flex: 1;
+  flex: 0 0 42%;           /* tighter right info panel */
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 16px;
-  padding: 32px 52px 32px 44px;
+  padding: 32px 44px 32px 36px;
   background: #ECEEF3;
 }
 
