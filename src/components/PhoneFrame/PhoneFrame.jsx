@@ -121,7 +121,7 @@ export default function PhoneFrame() {
           </div>
 
           <div className="pf-phone">
-            <div className="pf-phone-shell" style={{ height: phoneH, width: Math.round(phoneH * 0.52) }}>
+            <div className="pf-phone-shell" style={{ height: phoneH, width: Math.round(phoneH * 0.60) }}>
               <div className="pf-notch"><div className="pf-notch-camera" /></div>
               <div className="pf-status-bar">
                 <Clock />
