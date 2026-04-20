@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pikko – Software Development Agreement</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #1A1A2E;
+      --mid:       #444;
+      --light:     #666;
+      --border:    #C8CBD4;
+      --bg:        #F9F9FB;
+      --accent:    #FF6B35;
+      --navy:      #1A1A2E;
+      --page-w:    780px;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', 'Georgia', serif;
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 48px 24px 80px;
+    }
+
+    .page {
+      max-width: var(--page-w);
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+      padding: 72px 80px;
+    }
+
+    /* ── Header ── */
+    .doc-header {
+      text-align: center;
+      border-bottom: 3px solid var(--navy);
+      padding-bottom: 32px;
+      margin-bottom: 40px;
+    }
+
+    .doc-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .logo-mark {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, #1A1A2E 0%, #2A2A5E 100%);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #FF6B35;
+      font-size: 22px;
+      font-weight: 900;
+      font-family: 'Noto Sans KR', sans-serif;
+      letter-spacing: -1px;
+    }
+
+    .logo-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+
+    .doc-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .doc-subtitle {
+      font-size: 13px;
+      color: var(--light);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Meta table ── */
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 44px;
+      font-size: 13px;
+    }
+
+    .meta-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+    }
+
+    .meta-table td:first-child {
+      font-weight: 700;
+      color: var(--navy);
+      background: #F4F5F8;
+      width: 180px;
+      white-space: nowrap;
+    }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--navy);
+      border-bottom: 2px solid var(--navy);
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+    }
+
+    .section-title .ko {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--light);
+      letter-spacing: 0;
+      text-transform: none;
+      margin-left: 8px;
+    }
+
+    .clause {
+      margin-bottom: 12px;
+    }
+
+    .clause-num {
+      font-weight: 700;
+      color: var(--navy);
+      margin-right: 4px;
+    }
+
+    /* ── Scope table ── */
+    .scope-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .scope-table th {
+      background: var(--navy);
+      color: #fff;
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .scope-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #EAECF0;
+      vertical-align: top;
+    }
+
+    .scope-table tr:nth-child(even) td { background: #F8F9FB; }
+
+    .scope-table td:first-child {
+      font-weight: 700;
+      color: var(--navy);
+      white-space: nowrap;
+      width: 160px;
+    }
+
+    /* ── Payment schedule ── */
+    .payment-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .payment-table th {
+      background: #FF6B35;
+      color: #fff;
+      padding: 9px 14px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .payment-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #EAECF0;
+    }
+
+    .payment-table tr:last-child td {
+      font-weight: 700;
+      background: #FFF3EE;
+      color: var(--navy);
+      border-top: 2px solid var(--accent);
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0;
+      margin-top: 12px;
+    }
+
+    .tl-week {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 13px;
+      padding: 8px 0;
+      border-right: 2px solid var(--accent);
+      padding-right: 16px;
+      text-align: right;
+    }
+
+    .tl-desc {
+      padding: 8px 0 8px 20px;
+      font-size: 13px;
+      border-bottom: 1px solid #EAECF0;
+    }
+
+    .tl-week:last-of-type, .tl-desc:last-of-type { border-bottom: none; }
+
+    /* ── Signature block ── */
+    .sig-section {
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 2px solid var(--navy);
+    }
+
+    .sig-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 36px;
+      letter-spacing: 0.5px;
+    }
+
+    .sig-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .sig-block {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 24px 20px;
+    }
+
+    .sig-role {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .sig-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    .sig-company {
+      font-size: 12px;
+      color: var(--light);
+      margin-bottom: 24px;
+    }
+
+    .sig-line-label {
+      font-size: 11px;
+      color: var(--light);
+      margin-top: 16px;
+      margin-bottom: 2px;
+    }
+
+    .sig-line {
+      border-bottom: 1.5px solid var(--ink);
+      height: 32px;
+      margin-bottom: 4px;
+    }
+
+    /* ── Footer ── */
+    .doc-footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { box-shadow: none; border: none; padding: 48px 60px; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <div class="doc-header">
+    <div class="doc-logo">
+      <div class="logo-mark">P</div>
+      <span class="logo-name">Pikko</span>
+    </div>
+    <div class="doc-title">Software Development Agreement</div>
+    <div class="doc-subtitle">소프트웨어 개발 계약서 &nbsp;·&nbsp; MVP Contract &nbsp;·&nbsp; April 2026</div>
+  </div>
+
+  <!-- ── Contract Meta ───────────────────────────────────────────── -->
+  <table class="meta-table">
+    <tr>
+      <td>Contract Date &nbsp;<span style="font-weight:400;color:#888">계약일</span></td>
+      <td>April 20, 2026</td>
+    </tr>
+    <tr>
+      <td>Client &nbsp;<span style="font-weight:400;color:#888">발주자</span></td>
+      <td>JungHyun Heo &nbsp;·&nbsp; whiteandheo@gmail.com</td>
+    </tr>
+    <tr>
+      <td>Developer &nbsp;<span style="font-weight:400;color:#888">개발자</span></td>
+      <td>_________________________________ &nbsp;·&nbsp; _________________________________</td>
+    </tr>
+    <tr>
+      <td>Project &nbsp;<span style="font-weight:400;color:#888">프로젝트</span></td>
+      <td>Pikko — Korea Sports Participation &amp; Booking Platform (MVP)</td>
+    </tr>
+    <tr>
+      <td>Total Value &nbsp;<span style="font-weight:400;color:#888">계약금액</span></td>
+      <td><strong>₩10,000,000 KRW</strong> (approx. USD 7,500)</td>
+    </tr>
+    <tr>
+      <td>Timeline &nbsp;<span style="font-weight:400;color:#888">개발 기간</span></td>
+      <td>6–8 weeks from contract signing date</td>
+    </tr>
+    <tr>
+      <td>Governing Law &nbsp;<span style="font-weight:400;color:#888">준거법</span></td>
+      <td>Republic of Korea / 대한민국 법률</td>
+    </tr>
+  </table>
+
+  <!-- ── 1. Project Overview ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">1. Project Overview <span class="ko">/ 프로젝트 개요</span></div>
+    <div class="clause">
+      <span class="clause-num">1.1</span>
+      Pikko is a mobile-first sports participation and booking platform for the Korean market. The initial product focus is pickleball in Seoul, with architecture designed to expand into badminton, futsal, tennis, and other sports.
+    </div>
+    <div class="clause">
+      <span class="clause-num">1.2</span>
+      The purpose of this Agreement is to engage the Developer to transform the existing frontend prototype into a production-ready MVP, including backend architecture, database design, payment integration, and live deployment.
+    </div>
+    <div class="clause">
+      <span class="clause-num">1.3</span>
+      A functional React-based frontend prototype with Kakao Map integration and mock data layer already exists. The Developer will build upon this foundation.
+    </div>
+  </div>
+
+  <!-- ── 2. Scope of Work ───────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">2. Scope of Work <span class="ko">/ 작업 범위</span></div>
+    <p style="margin-bottom:12px;color:var(--mid)">The Developer agrees to deliver all of the following components as part of this engagement:</p>
+    <table class="scope-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2.1 Frontend</td>
+          <td>Refactor and stabilize existing React prototype; ensure mobile-first responsive design; integrate Kakao Map SDK on Home screen; connect all UI components to backend APIs; implement smooth navigation and loading states.</td>
+        </tr>
+        <tr>
+          <td>2.2 Backend API</td>
+          <td>Design and implement a RESTful API layer; user authentication (email/password + Kakao OAuth ready); game creation and joining logic; court booking engine; operator/admin endpoints. API must be documented.</td>
+        </tr>
+        <tr>
+          <td>2.3 Database</td>
+          <td>Design and implement database schema for: Users, Facilities, Games, Bookings, Payments. Must support soft deletes, timestamps, and be structured for future multi-sport expansion.</td>
+        </tr>
+        <tr>
+          <td>2.4 Payment</td>
+          <td>Integrate KakaoPay (primary) or equivalent Korean payment processor. If merchant approval is pending, implement a polished demo payment flow. Backend must expose <code>/payment/ready</code> and <code>/payment/approve</code> endpoints compatible with KakaoPay v1 API.</td>
+        </tr>
+        <tr>
+          <td>2.5 Deployment</td>
+          <td>Deploy frontend to Vercel, Firebase Hosting, or equivalent. Deploy backend to AWS, GCP, Railway, or equivalent. Configure custom domain and SSL. Ensure production stability and uptime monitoring.</td>
+        </tr>
+        <tr>
+          <td>2.6 Security</td>
+          <td>Secure all API endpoints with authentication middleware. No API keys or secrets exposed on the frontend. Implement role-based authorization (user / operator / admin). Prepare for Korean Personal Information Protection Act (PIPA / 개인정보보호법) compliance.</td>
+        </tr>
+        <tr>
+          <td>2.7 Admin Dashboard</td>
+          <td>Basic web interface for operators to: manage court listings, monitor bookings, view game activity, and enable/disable facilities. Accessible only to admin-role users.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 3. Deliverables ───────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">3. Deliverables <span class="ko">/ 납품물</span></div>
+    <div class="clause"><span class="clause-num">3.1</span> Fully functional, live-deployed web MVP accessible at a public URL.</div>
+    <div class="clause"><span class="clause-num">3.2</span> Complete source code delivered via private Git repository (GitHub or equivalent), transferred to Client ownership upon final payment.</div>
+    <div class="clause"><span class="clause-num">3.3</span> Backend API documentation (Postman collection, Swagger, or equivalent).</div>
+    <div class="clause"><span class="clause-num">3.4</span> Working payment flow (KakaoPay real integration or polished demo) with confirmation and QR entry ticket generation.</div>
+    <div class="clause"><span class="clause-num">3.5</span> Admin dashboard accessible with operator credentials.</div>
+    <div class="clause"><span class="clause-num">3.6</span> Environment setup documentation (.env structure, deployment instructions).</div>
+    <div class="clause"><span class="clause-num">3.7</span> Two (2) weeks of post-launch bug fix support at no additional cost.</div>
+  </div>
+
+  <!-- ── 4. Timeline ───────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">4. Development Timeline <span class="ko">/ 개발 일정</span></div>
+    <div class="clause">
+      <span class="clause-num">4.1</span>
+      Development commences upon receipt of the initial payment (30%) and signed contract. The estimated timeline is <strong>6–8 weeks</strong>, broken down as follows:
+    </div>
+    <div class="timeline">
+      <div class="tl-week">Week 1–2</div>
+      <div class="tl-desc"><strong>Foundation:</strong> Backend scaffolding, database schema design, authentication system, API structure. Frontend–backend connection setup.</div>
+      <div class="tl-week">Week 3–4</div>
+      <div class="tl-desc"><strong>Core Features:</strong> Booking engine, game creation/joining, Kakao Map integration, payment endpoint development. <em>Midpoint milestone &amp; review.</em></div>
+      <div class="tl-week">Week 5–6</div>
+      <div class="tl-desc"><strong>Integration:</strong> Payment flow completion (KakaoPay or demo), admin dashboard, QR ticket generation, end-to-end testing.</div>
+      <div class="tl-week">Week 7–8</div>
+      <div class="tl-desc"><strong>Polish &amp; Deploy:</strong> Security hardening, performance optimization, production deployment, domain + SSL, documentation delivery.</div>
+    </div>
+    <div class="clause" style="margin-top:14px">
+      <span class="clause-num">4.2</span>
+      Timeline extensions of up to one (1) week per milestone are permitted with prior written notice, provided they do not exceed two (2) additional weeks total without renegotiation.
+    </div>
+  </div>
+
+  <!-- ── 5. Payment ────────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">5. Payment Terms <span class="ko">/ 대금 지급 조건</span></div>
+    <table class="payment-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Milestone</th>
+          <th>Trigger</th>
+          <th>Amount (KRW)</th>
+          <th>Amount (USD)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Contract Signing / 계약 체결</td>
+          <td>Upon signing + contract execution</td>
+          <td>₩3,000,000</td>
+          <td>~$2,250</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Midpoint Milestone / 중간 납품</td>
+          <td>Backend API + DB + auth live; week 4 review approved</td>
+          <td>₩4,000,000</td>
+          <td>~$3,000</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Final Delivery / 최종 납품</td>
+          <td>Full MVP deployed, tested, and Client-approved</td>
+          <td>₩3,000,000</td>
+          <td>~$2,250</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Total / 합계</strong></td>
+          <td><strong>₩10,000,000</strong></td>
+          <td><strong>~$7,500</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clause" style="margin-top:14px">
+      <span class="clause-num">5.1</span>
+      Payment shall be made via bank transfer (계좌이체) within three (3) business days of each milestone trigger. USD amounts are approximate and subject to the prevailing exchange rate at time of payment.
+    </div>
+    <div class="clause">
+      <span class="clause-num">5.2</span>
+      Final payment constitutes acceptance of all deliverables. If the Client raises issues at final review, the Developer shall resolve within seven (7) days before final payment becomes due.
+    </div>
+  </div>
+
+  <!-- ── 6. Intellectual Property ──────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">6. Intellectual Property <span class="ko">/ 지적 재산권</span></div>
+    <div class="clause">
+      <span class="clause-num">6.1</span>
+      Upon receipt of full and final payment, all intellectual property rights — including source code, design assets, database schemas, and documentation — are irrevocably transferred to and vest in the Client.
+    </div>
+    <div class="clause">
+      <span class="clause-num">6.2</span>
+      Prior to final payment, the Developer retains ownership of all work product. The Client may not distribute, sublicense, or deploy the deliverables for commercial use until full payment is received.
+    </div>
+    <div class="clause">
+      <span class="clause-num">6.3</span>
+      The Developer may reference this project in their portfolio (name, category, tech stack only) unless the Client requests otherwise in writing.
+    </div>
+  </div>
+
+  <!-- ── 7. Confidentiality ─────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">7. Confidentiality <span class="ko">/ 비밀유지</span></div>
+    <div class="clause">
+      <span class="clause-num">7.1</span>
+      Both parties agree to keep all project details, business strategies, technical implementations, API keys, user data, and financial terms strictly confidential and not to disclose them to any third party without prior written consent.
+    </div>
+    <div class="clause">
+      <span class="clause-num">7.2</span>
+      This obligation survives termination of this Agreement for a period of two (2) years.
+    </div>
+    <div class="clause">
+      <span class="clause-num">7.3</span>
+      The Developer shall not use any access credentials, user data, or API keys provided by the Client for any purpose other than fulfilling this Agreement.
+    </div>
+  </div>
+
+  <!-- ── 8. Warranties ─────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">8. Warranties &amp; Support <span class="ko">/ 보증 및 지원</span></div>
+    <div class="clause">
+      <span class="clause-num">8.1</span>
+      The Developer warrants that all deliverables will function as described in this Agreement, be free from known critical bugs, and perform reliably under normal usage conditions at the time of final delivery.
+    </div>
+    <div class="clause">
+      <span class="clause-num">8.2</span>
+      The Developer shall provide <strong>two (2) weeks of bug fix support</strong> following final delivery at no additional charge. This covers defects directly attributable to the Developer's implementation.
+    </div>
+    <div class="clause">
+      <span class="clause-num">8.3</span>
+      Support does not cover: new feature requests, third-party API changes (e.g., Kakao policy changes), or issues arising from Client modifications to the codebase.
+    </div>
+  </div>
+
+  <!-- ── 9. Termination ────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">9. Termination <span class="ko">/ 계약 해지</span></div>
+    <div class="clause">
+      <span class="clause-num">9.1</span>
+      Either party may terminate this Agreement with fourteen (14) days written notice to the other party.
+    </div>
+    <div class="clause">
+      <span class="clause-num">9.2</span>
+      In the event of termination, the Client shall pay for all work completed and accepted up to the termination date, calculated on a pro-rata basis against the total contract value.
+    </div>
+    <div class="clause">
+      <span class="clause-num">9.3</span>
+      If the Client terminates without cause after the midpoint milestone payment has been made, no refund of that payment shall be issued.
+    </div>
+    <div class="clause">
+      <span class="clause-num">9.4</span>
+      If the Developer fails to deliver the agreed milestones within the timeline specified in Section 4 (including permitted extensions), the Client may terminate and is entitled to a pro-rata refund of payments made for undelivered work.
+    </div>
+  </div>
+
+  <!-- ── 10. Dispute Resolution ────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">10. Dispute Resolution <span class="ko">/ 분쟁 해결</span></div>
+    <div class="clause">
+      <span class="clause-num">10.1</span>
+      The parties agree to first attempt to resolve any dispute through good-faith negotiation within fourteen (14) days of written notice of the dispute.
+    </div>
+    <div class="clause">
+      <span class="clause-num">10.2</span>
+      If negotiation fails, the parties agree to submit to mediation before a mutually agreed mediator in Seoul, Republic of Korea.
+    </div>
+    <div class="clause">
+      <span class="clause-num">10.3</span>
+      If mediation fails, disputes shall be subject to the exclusive jurisdiction of the courts of Seoul, Republic of Korea, and governed by the laws of the Republic of Korea.
+    </div>
+  </div>
+
+  <!-- ── 11. General ───────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title">11. General Provisions <span class="ko">/ 일반 조항</span></div>
+    <div class="clause">
+      <span class="clause-num">11.1 Entire Agreement.</span>
+      This Agreement constitutes the entire agreement between the parties and supersedes all prior negotiations, representations, or agreements relating to its subject matter.
+    </div>
+    <div class="clause">
+      <span class="clause-num">11.2 Amendments.</span>
+      No amendment or modification of this Agreement shall be valid unless made in writing and signed by both parties.
+    </div>
+    <div class="clause">
+      <span class="clause-num">11.3 Independent Contractor.</span>
+      The Developer is an independent contractor and not an employee of the Client. The Developer is solely responsible for their own taxes, insurance, and benefits.
+    </div>
+    <div class="clause">
+      <span class="clause-num">11.4 Severability.</span>
+      If any provision of this Agreement is found to be unenforceable, the remaining provisions shall remain in full force and effect.
+    </div>
+    <div class="clause">
+      <span class="clause-num">11.5 Force Majeure.</span>
+      Neither party shall be liable for delays caused by circumstances beyond their reasonable control, including natural disasters, government actions, or platform API policy changes by third parties (e.g., Kakao).
+    </div>
+  </div>
+
+  <!-- ── Signature Block ───────────────────────────────────────── -->
+  <div class="sig-section">
+    <div class="sig-title">Signatures / 서명 — By signing below, both parties agree to the terms of this Agreement.</div>
+    <div class="sig-grid">
+
+      <div class="sig-block">
+        <div class="sig-role">Client / 발주자</div>
+        <div class="sig-name">JungHyun Heo</div>
+        <div class="sig-company">Pikko &nbsp;·&nbsp; whiteandheo@gmail.com</div>
+
+        <div class="sig-line-label">Signature / 서명</div>
+        <div class="sig-line"></div>
+
+        <div class="sig-line-label">Date / 날짜</div>
+        <div class="sig-line"></div>
+
+        <div class="sig-line-label">Printed Name / 성명</div>
+        <div class="sig-line"></div>
+      </div>
+
+      <div class="sig-block">
+        <div class="sig-role">Developer / 개발자</div>
+        <div class="sig-name">_________________________</div>
+        <div class="sig-company">_________________________</div>
+
+        <div class="sig-line-label">Signature / 서명</div>
+        <div class="sig-line"></div>
+
+        <div class="sig-line-label">Date / 날짜</div>
+        <div class="sig-line"></div>
+
+        <div class="sig-line-label">Printed Name / 성명</div>
+        <div class="sig-line"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────────────── -->
+  <div class="doc-footer">
+    Pikko Software Development Agreement &nbsp;·&nbsp; April 20, 2026 &nbsp;·&nbsp; Page 1 of 1<br/>
+    This document is confidential. For questions contact whiteandheo@gmail.com
+  </div>
+
+</div>
+</body>
+</html>
