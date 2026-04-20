@@ -111,6 +111,13 @@
     /* ── Sections ── */
     .section {
       margin-bottom: 36px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .section-title {
+      page-break-after: avoid;
+      break-after: avoid;
     }
 
     .section-title {
@@ -135,6 +142,8 @@
 
     .clause {
       margin-bottom: 12px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .clause-num {
@@ -308,6 +317,55 @@
     @media print {
       body { background: #fff; padding: 0; }
       .page { box-shadow: none; border: none; padding: 48px 60px; max-width: 100%; }
+
+      /* Never break inside these elements */
+      .section,
+      .clause,
+      .sig-section,
+      .sig-grid,
+      .sig-block,
+      .meta-table,
+      .meta-table tr,
+      .scope-table tr,
+      .payment-table tr,
+      .timeline,
+      .doc-header,
+      .doc-footer {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      /* Each section starts on a new block but does NOT force a new page —
+         it just refuses to be split across pages */
+      .section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      /* Keep table headers with their first row */
+      .scope-table thead,
+      .payment-table thead {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      /* Keep section title glued to its first clause */
+      .section-title {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      /* Signature block always starts fresh on its own page */
+      .sig-section {
+        page-break-before: always;
+        break-before: always;
+      }
+
+      /* Footer stays with whatever is above it */
+      .doc-footer {
+        page-break-before: avoid;
+        break-before: avoid;
+      }
     }
   </style>
 </head>
