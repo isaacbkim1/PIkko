@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Pikko</string>
+    <string name="title_activity_main">Pikko</string>
+    <string name="package_name">com.inuslabs.pikko</string>
+    <string name="custom_url_scheme">com.inuslabs.pikko</string>
+</resources>
