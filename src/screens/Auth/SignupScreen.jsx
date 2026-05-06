@@ -54,18 +54,19 @@ export default function SignupScreen() {
 
   return (
     <div className="auth-screen">
-      {/* Header */}
-      <div className="auth-header">
-        <div className="auth-logo">
-          <div className="auth-logo-icon">P</div>
-          <span className="auth-logo-text">Pikko</span>
+      {/* Hero */}
+      <div className="auth-hero">
+        <div className="auth-hero-bg" />
+        <div className="auth-hero-content">
+          <img src="/pickleparklogo.png" alt="Pikko" className="auth-hero-logo" />
+          <p className="auth-hero-tagline">서울 스포츠 코트 예약 플랫폼</p>
         </div>
-        <h1 className="auth-title">회원가입</h1>
-        <p className="auth-subtitle">Pikko와 함께 코트를 예약하세요</p>
       </div>
 
-      {/* Form */}
-      <div className="auth-form-container">
+      {/* Card */}
+      <div className="auth-card">
+        <h2 className="auth-card-title">회원가입</h2>
+        <p className="auth-card-sub">Pikko와 함께 코트를 예약하세요</p>
         <form onSubmit={handleSubmit} className="auth-form">
 
           {error && <div className="auth-error">{error}</div>}
@@ -193,6 +194,7 @@ export default function SignupScreen() {
             이미 계정이 있으신가요?{' '}
             <Link to="/login" className="auth-switch-link">로그인</Link>
           </p>
+        </form>
         </form>
       </div>
     </div>

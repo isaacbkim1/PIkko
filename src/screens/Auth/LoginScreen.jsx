@@ -5,7 +5,7 @@ import { friendlyError } from '../../firebase/authService';
 import './LoginScreen.css';
 
 export default function LoginScreen() {
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
   const { login } = useAuth();
   const [email,    setEmail]    = useState('');
   const [password, setPassword] = useState('');
@@ -29,18 +29,24 @@ export default function LoginScreen() {
   return (
     <div className="auth-screen">
 
-      {/* ── Full-bleed navy header ── */}
-      <div className="auth-header">
-        <div className="auth-logo">
-          <div className="auth-logo-icon">P</div>
-          <span className="auth-logo-text">Pikko</span>
+      {/* ── Hero Header ── */}
+      <div className="auth-hero">
+        <div className="auth-hero-bg" />
+        <div className="auth-hero-content">
+          <img
+            src="/pickleparklogo.png"
+            alt="Pikko"
+            className="auth-hero-logo"
+          />
+          <p className="auth-hero-tagline">서울 스포츠 코트 예약 플랫폼</p>
         </div>
-        <h1 className="auth-title">로그인</h1>
-        <p className="auth-subtitle">코트 예약을 위해 로그인하세요</p>
       </div>
 
-      {/* ── Form ── */}
-      <div className="auth-form-container">
+      {/* ── Card Form ── */}
+      <div className="auth-card">
+        <h2 className="auth-card-title">로그인</h2>
+        <p className="auth-card-sub">계정에 로그인하여 코트를 예약하세요</p>
+
         <form onSubmit={handleLogin} className="auth-form">
 
           {error && <div className="auth-error">{error}</div>}
@@ -54,15 +60,9 @@ export default function LoginScreen() {
                   <polyline points="22,6 12,13 2,6"/>
                 </svg>
               </span>
-              <input
-                className="auth-input"
-                type="email"
-                placeholder="example@email.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                autoComplete="email"
-                required
-              />
+              <input className="auth-input" type="email" placeholder="example@email.com"
+                value={email} onChange={e => setEmail(e.target.value)}
+                autoComplete="email" required />
             </div>
           </div>
 
@@ -75,21 +75,15 @@ export default function LoginScreen() {
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
               </span>
-              <input
-                className="auth-input"
-                type="password"
-                placeholder="비밀번호를 입력하세요"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                autoComplete="current-password"
-                required
-              />
+              <input className="auth-input" type="password" placeholder="비밀번호를 입력하세요"
+                value={password} onChange={e => setPassword(e.target.value)}
+                autoComplete="current-password" required />
             </div>
           </div>
 
           <button className="auth-btn" type="submit" disabled={loading}>
             {loading
-              ? <span className="auth-btn-loading"><span className="auth-spinner"/> 로그인 중...</span>
+              ? <span className="auth-btn-loading"><span className="auth-spinner" /> 로그인 중...</span>
               : '로그인'}
           </button>
 
@@ -104,7 +98,7 @@ export default function LoginScreen() {
 
           <div className="auth-demo-box">
             <p className="auth-demo-title">데모 계정</p>
-            <p className="auth-demo-info">demo@pikko.kr / demo1234</p>
+            <p className="auth-demo-info">demo@pikko.kr · demo1234</p>
             <button type="button" className="auth-demo-fill"
               onClick={() => { setEmail('demo@pikko.kr'); setPassword('demo1234'); }}>
               자동 입력
@@ -118,6 +112,7 @@ export default function LoginScreen() {
 
         </form>
       </div>
+
     </div>
   );
 }
