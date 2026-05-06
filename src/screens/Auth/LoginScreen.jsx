@@ -28,6 +28,8 @@ export default function LoginScreen() {
 
   return (
     <div className="auth-screen">
+
+      {/* ── Full-bleed navy header ── */}
       <div className="auth-header">
         <div className="auth-logo">
           <div className="auth-logo-icon">P</div>
@@ -37,6 +39,7 @@ export default function LoginScreen() {
         <p className="auth-subtitle">코트 예약을 위해 로그인하세요</p>
       </div>
 
+      {/* ── Form ── */}
       <div className="auth-form-container">
         <form onSubmit={handleLogin} className="auth-form">
 
@@ -46,7 +49,7 @@ export default function LoginScreen() {
             <label className="auth-label">이메일</label>
             <div className="auth-input-wrap">
               <span className="auth-input-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                   <polyline points="22,6 12,13 2,6"/>
                 </svg>
@@ -67,7 +70,7 @@ export default function LoginScreen() {
             <label className="auth-label">비밀번호</label>
             <div className="auth-input-wrap">
               <span className="auth-input-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
@@ -85,17 +88,15 @@ export default function LoginScreen() {
           </div>
 
           <button className="auth-btn" type="submit" disabled={loading}>
-            {loading ? (
-              <span className="auth-btn-loading">
-                <span className="auth-spinner" /> 로그인 중...
-              </span>
-            ) : '로그인'}
+            {loading
+              ? <span className="auth-btn-loading"><span className="auth-spinner"/> 로그인 중...</span>
+              : '로그인'}
           </button>
 
           <div className="auth-divider"><span>또는</span></div>
 
           <button type="button" className="auth-btn-kakao" disabled>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#3C1E1E">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="#3C1E1E">
               <path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.7 1.68 5.1 4.2 6.6l-1.08 3.96 4.44-2.94c.72.12 1.56.18 2.4.18 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"/>
             </svg>
             카카오 로그인 (준비 중)
@@ -114,6 +115,7 @@ export default function LoginScreen() {
             계정이 없으신가요?{' '}
             <Link to="/signup" className="auth-switch-link">회원가입</Link>
           </p>
+
         </form>
       </div>
     </div>
