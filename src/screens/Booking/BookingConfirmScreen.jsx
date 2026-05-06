@@ -15,6 +15,8 @@ import { useBooking } from '../../context/BookingContext'
 import Header from '../../components/Layout/Header'
 import Badge from '../../components/UI/Badge'
 import BookingTicket from '../../components/UI/BookingTicket'
+import { sendBookingConfirmation, requestNotificationPermission } from '../../firebase/messaging'
+import { useAuth } from '../../context/AuthContext'
 import './BookingConfirmScreen.css'
 
 export default function BookingConfirmScreen() {
@@ -23,6 +25,7 @@ export default function BookingConfirmScreen() {
   const [searchParams] = useSearchParams()
   const { createBooking } = useBooking()
 
+  const { userId } = useAuth()
   const [booking,     setBooking]     = useState(null)
   const [facility,    setFacility]    = useState(null)
   const [visible,     setVisible]     = useState(false)
@@ -35,6 +38,17 @@ export default function BookingConfirmScreen() {
       setBooking(location.state.booking)
       setFacility(location.state.facility)
       setTimeout(() => setVisible(true), 200)
+      // Send push notification
+      const b = location.state.booking
+      const f = location.state.facility
+      requestNotificationPermission(userId).then(() => {
+        sendBookingConfirmation({
+          facilityName: f?.name || b?.facilityName || '시설',
+          date: b?.date || '',
+          time: b?.time || '',
+          bookingId: b?.id || Date.now().toString(),
+        })
+      })
       return
     }
 

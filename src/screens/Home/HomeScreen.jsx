@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Layout from '../../components/Layout/Layout'
@@ -6,6 +6,7 @@ import KakaoMap from '../../components/Map/KakaoMap'
 import Badge from '../../components/UI/Badge'
 import { facilities } from '../../data/facilities'
 import { events } from '../../data/events'
+import { useNotifications } from '../../hooks/useNotifications'
 import './HomeScreen.css'
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -117,6 +118,16 @@ export default function HomeScreen() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [selectedSport, setSelectedSport] = useState('pickleball')
+  const [showNotifBanner, setShowNotifBanner] = useState(false)
+  const { permission, requestPermission } = useNotifications()
+
+  useEffect(() => {
+    // Show banner if permission not yet decided
+    if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+      const t = setTimeout(() => setShowNotifBanner(true), 3000)
+      return () => clearTimeout(t)
+    }
+  }, [])
 
   const upcomingEvents = events.slice(0, 3)
 
@@ -129,6 +140,26 @@ export default function HomeScreen() {
      */
     <Layout rightAction={<NotificationButton />}>
       <div className="home-screen">
+
+        {/* ── Notification permission banner ── */}
+        {showNotifBanner && permission === 'default' && (
+          <div className="notif-banner">
+            <div className="notif-banner-left">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" strokeWidth="2">
+                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 01-3.46 0"/>
+              </svg>
+              <span>예약 알림을 받으시겠어요?</span>
+            </div>
+            <div className="notif-banner-actions">
+              <button className="notif-banner-allow" onClick={async () => {
+                await requestPermission()
+                setShowNotifBanner(false)
+              }}>허용</button>
+              <button className="notif-banner-dismiss" onClick={() => setShowNotifBanner(false)}>닫기</button>
+            </div>
+          </div>
+        )}
 
         {/* ── Hero Banner ── */}
         <div className="home-hero">
