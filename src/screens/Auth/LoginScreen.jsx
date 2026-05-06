@@ -1,121 +1,121 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.jsx";
-import PikkoBall from "../../components/UI/PikkoBall";
-import "./LoginScreen.css";
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { friendlyError } from '../../firebase/authService';
+import './LoginScreen.css';
 
 export default function LoginScreen() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [email,    setEmail]    = useState("");
-  const [password, setPassword] = useState("");
-  const [error,    setError]    = useState("");
+  const [email,    setEmail]    = useState('');
+  const [password, setPassword] = useState('');
+  const [error,    setError]    = useState('');
   const [loading,  setLoading]  = useState(false);
-  const [role,     setRole]     = useState("citizen"); // citizen | operator
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setLoading(true);
-    const result = login(email, password);
-    setLoading(false);
-    if (result.success) navigate("/");
-    else setError(result.error || "로그인에 실패했습니다.");
-  };
-
-  const handleDemoLogin = () => {
-    const result = login("demo@pikko.kr", "demo1234");
-    if (result.success) navigate("/");
+    try {
+      await login(email, password);
+      navigate('/');
+    } catch (err) {
+      setError(friendlyError(err.code));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="login-screen">
-
-      {/* ── Logo area ── */}
-      <div className="login-logo-area">
-        <div className="login-logo-icon">
-          <PikkoBall size={52} />
+    <div className="auth-screen">
+      <div className="auth-header">
+        <div className="auth-logo">
+          <div className="auth-logo-icon">P</div>
+          <span className="auth-logo-text">Pikko</span>
         </div>
-        <h1 className="login-logo-text">Pikko</h1>
-        <p className="login-logo-sub">Korea Public Sports Access Platform</p>
+        <h1 className="auth-title">로그인</h1>
+        <p className="auth-subtitle">코트 예약을 위해 로그인하세요</p>
       </div>
 
-      {/* ── Card ── */}
-      <div className="login-card">
-        <h2 className="login-card-title">Sign in to your account</h2>
+      <div className="auth-form-container">
+        <form onSubmit={handleLogin} className="auth-form">
 
-        {/* Role selector */}
-        <div className="login-role-tabs">
-          <button
-            className={`login-role-tab ${role === 'citizen' ? 'login-role-tab--active' : ''}`}
-            onClick={() => setRole('citizen')}
-          >
-            <span className="role-tab-icon">&#9786;</span>
-            Citizen
-          </button>
-          <button
-            className={`login-role-tab ${role === 'operator' ? 'login-role-tab--active' : ''}`}
-            onClick={() => setRole('operator')}
-          >
-            <span className="role-tab-icon">&#9881;</span>
-            Operator
-          </button>
-        </div>
+          {error && <div className="auth-error">{error}</div>}
 
-        <form onSubmit={handleLogin}>
-          <div className="login-field">
-            <label className="login-label">EMAIL</label>
-            <input
-              type="email"
-              className="login-input"
-              placeholder={role === 'citizen' ? 'junghyun@pikko.kr' : 'operator@pikko.kr'}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="login-field">
-            <label className="login-label">PASSWORD</label>
-            <input
-              type="password"
-              className="login-input"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+          <div className="auth-field">
+            <label className="auth-label">이메일</label>
+            <div className="auth-input-wrap">
+              <span className="auth-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input
+                className="auth-input"
+                type="email"
+                placeholder="example@email.com"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+            </div>
           </div>
 
-          {error && <div className="login-error">{error}</div>}
+          <div className="auth-field">
+            <label className="auth-label">비밀번호</label>
+            <div className="auth-input-wrap">
+              <span className="auth-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                className="auth-input"
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+            </div>
+          </div>
 
-          <button type="submit" className="login-btn-primary" disabled={loading}>
-            {loading ? "Signing in..." : "→ Sign In"}
+          <button className="auth-btn" type="submit" disabled={loading}>
+            {loading ? (
+              <span className="auth-btn-loading">
+                <span className="auth-spinner" /> 로그인 중...
+              </span>
+            ) : '로그인'}
           </button>
+
+          <div className="auth-divider"><span>또는</span></div>
+
+          <button type="button" className="auth-btn-kakao" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#3C1E1E">
+              <path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.7 1.68 5.1 4.2 6.6l-1.08 3.96 4.44-2.94c.72.12 1.56.18 2.4.18 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"/>
+            </svg>
+            카카오 로그인 (준비 중)
+          </button>
+
+          <div className="auth-demo-box">
+            <p className="auth-demo-title">데모 계정</p>
+            <p className="auth-demo-info">demo@pikko.kr / demo1234</p>
+            <button type="button" className="auth-demo-fill"
+              onClick={() => { setEmail('demo@pikko.kr'); setPassword('demo1234'); }}>
+              자동 입력
+            </button>
+          </div>
+
+          <p className="auth-switch">
+            계정이 없으신가요?{' '}
+            <Link to="/signup" className="auth-switch-link">회원가입</Link>
+          </p>
         </form>
-
-        <p className="login-or">or continue with</p>
-
-        {/* KakaoPay button */}
-        <div className="login-kakao-wrapper">
-          <button className="login-btn-kakao" disabled>
-            &#9993; Continue with Kakao
-          </button>
-          <span className="login-coming-soon">COMING SOON</span>
-        </div>
       </div>
-
-      {/* ── Quick demo links ── */}
-      <p className="login-demo-hint">
-        Quick demo login:{" "}
-        <button className="login-demo-link" onClick={handleDemoLogin}>
-          Citizen
-        </button>
-        {" · "}
-        <button className="login-demo-link" onClick={handleDemoLogin}>
-          Operator
-        </button>
-        {" "}— tap to fill credentials
-      </p>
     </div>
   );
 }

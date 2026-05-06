@@ -1,153 +1,199 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.jsx";
-import PikkoBall from "../../components/UI/PikkoBall";
-
-const SEOUL_DISTRICTS = [
-  "강남구", "강동구", "강북구", "강서구", "관악구",
-  "광진구", "구로구", "금천구", "노원구", "도봉구",
-  "동대문구", "동작구", "마포구", "서대문구", "서초구",
-  "성동구", "성북구", "송파구", "양천구", "영등포구",
-  "용산구", "은평구", "종로구", "중구", "중랑구",
-];
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from '../../firebase/config';
+import './LoginScreen.css';
 
 export default function SignupScreen() {
   const navigate = useNavigate();
-  const { login } = useAuth();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    district: "",
-    agreed: false,
-  });
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setError('');
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-    if (!form.name.trim()) return setError("이름을 입력하세요.");
-    if (!form.email.trim()) return setError("이메일을 입력하세요.");
-    if (form.password.length < 6) return setError("비밀번호는 6자 이상이어야 합니다.");
-    if (form.password !== form.passwordConfirm) return setError("비밀번호가 일치하지 않습니다.");
-    if (!form.agreed) return setError("이용약관에 동의해주세요.");
+  const validate = () => {
+    if (!form.name.trim())            return '이름을 입력해주세요';
+    if (!form.email.trim())           return '이메일을 입력해주세요';
+    if (form.password.length < 6)     return '비밀번호는 6자 이상이어야 합니다';
+    if (form.password !== form.confirm) return '비밀번호가 일치하지 않습니다';
+    return null;
+  };
 
-    // MVP: use login() with entered data for demo
-    const result = login("demo@pikko.kr", "demo1234");
-    if (result.success) navigate("/");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const err = validate();
+    if (err) return setError(err);
+
+    setLoading(true);
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, form.email, form.password);
+      await updateProfile(cred.user, { displayName: form.name });
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        name:      form.name,
+        email:     form.email,
+        role:      'user',
+        createdAt: serverTimestamp(),
+      });
+      navigate('/');
+    } catch (e) {
+      const msgs = {
+        'auth/email-already-in-use': '이미 사용 중인 이메일입니다',
+        'auth/invalid-email':        '올바른 이메일 형식이 아닙니다',
+        'auth/weak-password':        '비밀번호는 6자 이상이어야 합니다',
+      };
+      setError(msgs[e.code] || '회원가입에 실패했습니다. 다시 시도해주세요');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="auth-screen">
-      <div className="auth-container">
+      {/* Header */}
+      <div className="auth-header">
         <div className="auth-logo">
-          <div className="auth-logo-icon" style={{background:'linear-gradient(135deg,#1A1A2E,#2A2A5E)',borderRadius:'16px',padding:'8px',display:'flex',alignItems:'center',justifyContent:'center'}}>
-            <PikkoBall size={44} />
-          </div>
-          <h1 className="auth-logo-text">Pikko 회원가입</h1>
-          <p className="auth-logo-sub">서울 스포츠 코트 예약을 시작하세요</p>
+          <div className="auth-logo-icon">P</div>
+          <span className="auth-logo-text">Pikko</span>
         </div>
+        <h1 className="auth-title">회원가입</h1>
+        <p className="auth-subtitle">Pikko와 함께 코트를 예약하세요</p>
+      </div>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">이름</label>
-            <input
-              type="text"
-              name="name"
-              className="form-input"
-              placeholder="실명을 입력하세요"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
+      {/* Form */}
+      <div className="auth-form-container">
+        <form onSubmit={handleSubmit} className="auth-form">
+
+          {error && <div className="auth-error">{error}</div>}
+
+          {/* Name */}
+          <div className="auth-field">
+            <label className="auth-label">이름</label>
+            <div className="auth-input-wrap">
+              <span className="auth-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+              <input
+                className="auth-input"
+                type="text"
+                name="name"
+                placeholder="홍길동"
+                value={form.name}
+                onChange={handleChange}
+                autoComplete="name"
+                required
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">이메일</label>
-            <input
-              type="email"
-              name="email"
-              className="form-input"
-              placeholder="이메일을 입력하세요"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
+          {/* Email */}
+          <div className="auth-field">
+            <label className="auth-label">이메일</label>
+            <div className="auth-input-wrap">
+              <span className="auth-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input
+                className="auth-input"
+                type="email"
+                name="email"
+                placeholder="example@email.com"
+                value={form.email}
+                onChange={handleChange}
+                autoComplete="email"
+                required
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">비밀번호</label>
-            <input
-              type="password"
-              name="password"
-              className="form-input"
-              placeholder="6자 이상 입력하세요"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
+          {/* Password */}
+          <div className="auth-field">
+            <label className="auth-label">비밀번호</label>
+            <div className="auth-input-wrap">
+              <span className="auth-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                className="auth-input"
+                type="password"
+                name="password"
+                placeholder="6자 이상 입력하세요"
+                value={form.password}
+                onChange={handleChange}
+                autoComplete="new-password"
+                required
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">비밀번호 확인</label>
-            <input
-              type="password"
-              name="passwordConfirm"
-              className="form-input"
-              placeholder="비밀번호를 다시 입력하세요"
-              value={form.passwordConfirm}
-              onChange={handleChange}
-              required
-            />
+          {/* Confirm Password */}
+          <div className="auth-field">
+            <label className="auth-label">비밀번호 확인</label>
+            <div className="auth-input-wrap">
+              <span className="auth-input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                className="auth-input"
+                type="password"
+                name="confirm"
+                placeholder="비밀번호를 다시 입력하세요"
+                value={form.confirm}
+                onChange={handleChange}
+                autoComplete="new-password"
+                required
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">거주 구</label>
-            <select
-              name="district"
-              className="form-input"
-              value={form.district}
-              onChange={handleChange}
-            >
-              <option value="">구를 선택하세요</option>
-              {SEOUL_DISTRICTS.map((d) => (
-                <option key={d} value={d}>{d}</option>
-              ))}
-            </select>
-          </div>
+          {/* Terms */}
+          <p className="auth-terms">
+            가입 시 Pikko의 <span className="auth-link-text">이용약관</span> 및{' '}
+            <span className="auth-link-text">개인정보처리방침</span>에 동의하는 것으로 간주됩니다.
+          </p>
 
-          <div className="form-check">
-            <input
-              type="checkbox"
-              id="agreed"
-              name="agreed"
-              checked={form.agreed}
-              onChange={handleChange}
-            />
-            <label htmlFor="agreed" className="form-check-label">
-              <span>이용약관 및 개인정보처리방침에 동의합니다</span>
-            </label>
-          </div>
-
-          {error && <div className="error-msg">{error}</div>}
-
-          <button type="submit" className="btn btn-primary btn-full">
-            회원가입
+          {/* Submit */}
+          <button className="auth-btn" type="submit" disabled={loading}>
+            {loading ? (
+              <span className="auth-btn-loading">
+                <span className="auth-spinner" /> 처리 중...
+              </span>
+            ) : '회원가입'}
           </button>
-        </form>
 
-        <p className="auth-footer">
-          이미 계정이 있으신가요?{" "}
-          <Link to="/login" className="auth-link">
-            로그인
-          </Link>
-        </p>
+          {/* Divider */}
+          <div className="auth-divider"><span>또는</span></div>
+
+          {/* Kakao */}
+          <button type="button" className="auth-btn-kakao" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#3C1E1E">
+              <path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.7 1.68 5.1 4.2 6.6l-1.08 3.96 4.44-2.94c.72.12 1.56.18 2.4.18 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"/>
+            </svg>
+            카카오 로그인 (준비 중)
+          </button>
+
+          {/* Login link */}
+          <p className="auth-switch">
+            이미 계정이 있으신가요?{' '}
+            <Link to="/login" className="auth-switch-link">로그인</Link>
+          </p>
+        </form>
       </div>
     </div>
   );
