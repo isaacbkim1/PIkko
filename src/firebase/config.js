@@ -2,13 +2,15 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+// Firebase config — hardcoded for reliability
+// TODO: move back to env vars when Vercel env injection is confirmed working
 const firebaseConfig = {
-  apiKey:            import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain:        import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId:         import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket:     import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId:             import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey:            'AIzaSyDYN2TtRinA_435MdH9IhU0HUEhB85mtn0',
+  authDomain:        'pikko-app.firebaseapp.com',
+  projectId:         'pikko-app',
+  storageBucket:     'pikko-app.firebasestorage.app',
+  messagingSenderId: '256520655407',
+  appId:             '1:256520655407:web:42a747529e513bb0996cda',
 };
 
 const app  = initializeApp(firebaseConfig);
