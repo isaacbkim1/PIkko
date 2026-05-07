@@ -275,7 +275,8 @@
   margin-bottom: 4px;
 }
 .login-kakao-btn:hover:not(:disabled) { background: #f5dc00; transform: translateY(-1px); }
-.login-kakao-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.login-kakao-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.login-kakao-disabled { opacity: 0.45 !important; filter: grayscale(0.3); }
 
 /* ── Divider with text ───────────────────────────────────────────────────────── */
 .login-divider {

@@ -17,14 +17,20 @@ export default function LoginScreen() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (!email || !password) return setError('이메일과 비밀번호를 입력해주세요');
+    e.stopPropagation();
+    const emailVal = email.trim();
+    const passVal  = password;
+    console.log('Login attempt:', emailVal);
+    if (!emailVal || !passVal) return setError('이메일과 비밀번호를 입력해주세요');
     setError('');
     setLoading(true);
     try {
-      await login(email.trim(), password);
+      await login(emailVal, passVal);
+      console.log('Login success, navigating...');
       navigate('/');
     } catch (err) {
-      console.error('Login error:', err.code, err.message);
+      console.error('Login error code:', err.code);
+      console.error('Login error msg:', err.message);
       setError(friendlyError(err.code));
     } finally {
       setLoading(false);
@@ -94,26 +100,20 @@ export default function LoginScreen() {
           </button>
         </div>
 
-        {/* ── Kakao login button ── */}
+        {/* ── Kakao login button — disabled until business account ready ── */}
         <button
           type="button"
-          className="login-kakao-btn"
-          onClick={handleKakaoLogin}
-          disabled={kakaoLoading}
+          className="login-kakao-btn login-kakao-disabled"
+          disabled
+          title="카카오 로그인은 사업자 등록 후 이용 가능합니다"
         >
-          {kakaoLoading ? (
-            <span className="login-btn-loading"><span className="login-spinner" /> 카카오 연결 중...</span>
-          ) : (
-            <>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E">
-                <path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.7 1.68 5.1 4.2 6.6l-1.08 3.96 4.44-2.94c.72.12 1.56.18 2.4.18 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"/>
-              </svg>
-              카카오로 시작하기
-            </>
-          )}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E">
+            <path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.7 1.68 5.1 4.2 6.6l-1.08 3.96 4.44-2.94c.72.12 1.56.18 2.4.18 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"/>
+          </svg>
+          카카오 로그인 (사업자 등록 후 오픈)
         </button>
 
-        <div className="login-divider"><span>또는 이메일로 로그인</span></div>
+        <div className="login-divider"><span>이메일로 로그인</span></div>
 
         {/* ── Email form ── */}
         <form onSubmit={handleLogin} className="login-form">
