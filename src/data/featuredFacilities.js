@@ -74,8 +74,7 @@ export const featuredFacilities = [
     priceLabel: '회원제 / 25,000원',
     availability: '회원 슬롯 제한',
     slots: ['08:00', '10:00', '19:00', '21:00'],
-    // TODO: Replace with /assets/courts/court1-goyang.jpg
-    image: 'https://sspark.genspark.ai/cfimages?u1=wt2J6frZiJILSKz0dTQHoJ3B%2BaHVKIXIsqaxMOl7FZ%2Bpo2501ZBZXVNEUOcu4NEPE%2B26NkHR7H7m11VXAG7JS08ueed6v7C6dTTtLrwmj2w4fzLVgWpeMeq7tSCO5T5rTA%3D%3D&u2=Lt98zTLV804VOFYM&width=2560',
+    image: '/assets/courts/court1-goyang.jpg',
     gradientFallback: 'linear-gradient(135deg, #373B44 0%, #4286f4 100%)',
     lat: 37.6584,
     lng: 126.8320,
@@ -124,8 +123,7 @@ export const featuredFacilities = [
     priceLabel: '35,000원/시간',
     availability: '오늘 2슬롯 예약 가능',
     slots: ['12:00', '18:00'],
-    // TODO: Replace with /assets/courts/landmark-tower-gangnam.jpg
-    image: 'https://sspark.genspark.ai/cfimages?u1=H2qun7FtAqRhKwXD9zcv7W1wytrZFQdcTnxGjBcOffhlSjIP3aTzYPzcbYiVwKQI6N7MnN1ub%2BR2ojKaGyuRA7n4pY6l7qUkuHl8w35UdWwXSOHpyxBsiQzW9m3wtDxWdA%3D%3D&u2=RC5EQPZjMjxKKhsS&width=2560',
+    image: '/assets/courts/landmark-tower-gangnam.png',
     gradientFallback: 'linear-gradient(135deg, #FF6B35 0%, #c0392b 100%)',
     lat: 37.5000,
     lng: 127.0350,
