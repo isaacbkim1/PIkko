@@ -16,7 +16,7 @@ import Header from '../../components/Layout/Header'
 import Badge from '../../components/UI/Badge'
 import BookingTicket from '../../components/UI/BookingTicket'
 import { sendBookingConfirmation, requestNotificationPermission } from '../../firebase/messaging'
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './BookingConfirmScreen.css'
 
 export default function BookingConfirmScreen() {

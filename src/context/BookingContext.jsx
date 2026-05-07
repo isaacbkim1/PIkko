@@ -3,7 +3,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react'
 import { mockBookings, generateBookingRef } from '../data/bookings'
-import { useAuth } from './AuthContext'
+import { useAuth } from './AuthContext.jsx'
 
 const BookingContext = createContext(null)
 
