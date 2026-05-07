@@ -1,9 +1,10 @@
-import { useState, useMemo, useRef, useCallback } from 'react'
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
 import Badge from '../../components/UI/Badge'
 import KakaoMap from '../../components/Map/KakaoMap'
-import { facilities, districts } from '../../data/facilities'
+import { facilities, districts, allFacilities } from '../../data/facilities'
+import { featuredFacilities } from '../../data/featuredFacilities.js'
 import './SearchScreen.css'
 
 // TODO: [Backend API] GET /api/facilities?district=&sport=&priceMax= to replace mock data
@@ -26,6 +27,20 @@ const CARD_GRADIENTS = [
   'linear-gradient(135deg, #30cfd0, #667eea)',
 ]
 
+// All searchable facilities = mock 8 + featured 5
+const ALL_SEARCH = [
+  ...facilities,
+  ...featuredFacilities.map(f => ({
+    ...f,
+    name: f.koreanName,
+    sport: 'pickleball',
+    price: f.price || 0,
+    slots: (f.slots || []).map(t => ({ time: t, available: true })),
+    amenities: f.amenities || [],
+    gradientFallback: f.gradientFallback,
+  }))
+]
+
 // ── View toggle ───────────────────────────────────────────────────────────────
 
 const VIEWS = ['list', 'map']
@@ -34,8 +49,10 @@ const VIEWS = ['list', 'map']
 
 function FacilityCard({ facility, index, isHighlighted, cardRef, onCardClick }) {
   const navigate   = useNavigate()
-  const gradient   = CARD_GRADIENTS[index % CARD_GRADIENTS.length]
+  const gradient   = facility.gradientFallback || CARD_GRADIENTS[index % CARD_GRADIENTS.length]
   const available  = facility.slots.filter((s) => s.available).length
+  const hasPhoto   = facility.image && !facility.image.startsWith('gradient')
+  const [imgFailed, setImgFailed] = useState(false)
 
   return (
     <div
@@ -46,8 +63,22 @@ function FacilityCard({ facility, index, isHighlighted, cardRef, onCardClick }) 
         navigate(`/facility/${facility.id}`)
       }}
     >
-      <div className="search-card-img" style={{ background: gradient }}>
+      <div className="search-card-img" style={(!hasPhoto || imgFailed) ? { background: gradient } : {}}>
+        {hasPhoto && !imgFailed && (
+          <img
+            src={facility.image}
+            alt={facility.name}
+            className="search-card-photo"
+            onError={() => setImgFailed(true)}
+          />
+        )}
+        <div className="search-card-img-overlay" />
         <span className="search-card-rating">⭐ {facility.rating} ({facility.reviewCount})</span>
+        {facility.indoorOutdoor && (
+          <span className={`search-card-location-badge search-badge-${facility.indoorOutdoor.toLowerCase()}`}>
+            {facility.indoorOutdoor === 'Indoor' ? '실내' : '야외'}
+          </span>
+        )}
       </div>
       <div className="search-card-body">
         <div className="search-card-top">
@@ -124,7 +155,7 @@ export default function SearchScreen() {
   const cardRefs = useRef({})
 
   const filtered = useMemo(() => {
-    let result = [...facilities]
+    let result = [...ALL_SEARCH]
 
     if (query.trim()) {
       const q = query.trim().toLowerCase()

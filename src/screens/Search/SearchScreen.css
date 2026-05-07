@@ -152,20 +152,58 @@
 }
 
 .search-card-img {
-  height: 100px;
+  height: 160px;
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   padding: 10px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.search-card-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  transition: transform 0.3s;
+}
+.search-card:hover .search-card-photo {
+  transform: scale(1.03);
+}
+
+.search-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.5) 100%);
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
 }
 
 .search-card-rating {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.93);
   color: var(--text);
   font-size: 12px;
   font-weight: 700;
   padding: 3px 9px;
   border-radius: 8px;
+  position: relative;
+  z-index: 2;
 }
+
+.search-card-location-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
+}
+.search-badge-indoor  { background: rgba(255,255,255,0.92); color: #1A1A2E; }
+.search-badge-outdoor { background: rgba(86,185,74,0.92);   color: #fff; }
 
 .search-card-body {
   padding: 14px;
