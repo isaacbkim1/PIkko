@@ -24,11 +24,11 @@ const STATUS_CONFIG = {
 
 export default function ProfileScreen() {
   const navigate = useNavigate()
-  const { user, logout } = useAuth()
+  const { user, userName, userEmail, logout } = useAuth()
   const { bookings } = useBooking()
 
   const recentBookings = bookings.slice(0, 2)
-  const initials = user?.name?.charAt(0) ?? 'U'
+  const initials = userName?.charAt(0) ?? 'U'
 
   const handleLogout = () => {
     logout()
@@ -49,7 +49,7 @@ export default function ProfileScreen() {
         <div className="profile-hero-card">
           <div className="profile-avatar">{initials}</div>
           <div className="profile-info">
-            <h2 className="profile-name">{user?.name ?? '사용자'}</h2>
+            <h2 className="profile-name">{userName ?? '사용자'}</h2>
             {user?.district && (
               <span className="profile-district-badge">{user.district}</span>
             )}

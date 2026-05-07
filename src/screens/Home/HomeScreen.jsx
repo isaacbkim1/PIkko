@@ -115,7 +115,7 @@ function NotificationButton() {
 // ── Main Screen ───────────────────────────────────────────────────────────────
 
 export default function HomeScreen() {
-  const { user } = useAuth()
+  const { user, userName } = useAuth()
   const navigate = useNavigate()
   const [selectedSport, setSelectedSport] = useState('pickleball')
   const [showNotifBanner, setShowNotifBanner] = useState(false)
@@ -165,7 +165,7 @@ export default function HomeScreen() {
         <div className="home-hero">
           <div className="home-hero-content">
             <p className="home-hero-greeting">
-              안녕하세요, {user?.name?.split('')[0] ?? '게스트'}님 👋
+              안녕하세요, {userName ?? '게스트'}님 👋
             </p>
             <h1 className="home-hero-title">
               Pikko와 함께<br />
