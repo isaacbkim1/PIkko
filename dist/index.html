@@ -44,14 +44,25 @@
       window.__kakaoMapFailed = false;
       window.__kakaoMapReady = false;
     </script>
+    <!-- Kakao SDK (maps + auth) -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cf68fa163de5052959d09523518d941&libraries=services&autoload=false"
       onload="kakao.maps.load(function(){ window.__kakaoMapReady = true; })"
       onerror="window.__kakaoMapFailed = true"
     ></script>
-    <script type="module" crossorigin src="/assets/index-a28QMFXv.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DrN08uec.css">
+    <script>
+      // Initialize Kakao SDK for Auth
+      window.addEventListener('load', function() {
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+          window.Kakao.init('6cf68fa163de5052959d09523518d941');
+          console.log('Kakao SDK initialized:', window.Kakao.isInitialized());
+        }
+      });
+    </script>
+    <script type="module" crossorigin src="/assets/index-B4qkrOIc.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CXn_PCOU.css">
   </head>
   <body>
     <div id="root"></div>

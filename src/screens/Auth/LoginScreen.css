@@ -253,6 +253,46 @@
   text-decoration: underline;
 }
 
+/* ── Kakao button ───────────────────────────────────────────────────────────── */
+.login-kakao-btn {
+  width: 100%;
+  padding: 14px;
+  background: #FEE500;
+  color: #3C1E1E;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  -webkit-appearance: none;
+  margin-bottom: 4px;
+}
+.login-kakao-btn:hover:not(:disabled) { background: #f5dc00; transform: translateY(-1px); }
+.login-kakao-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Divider with text ───────────────────────────────────────────────────────── */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #9ca3af;
+  font-size: 12px;
+  margin: 4px 0;
+}
+.login-divider::before, .login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
 /* ── Legacy class support (signup screen reuse) ─────────────────────────────── */
 .auth-screen { min-height: 100vh; display: flex; flex-direction: column; background: #1A1A2E; font-family: 'Noto Sans KR', sans-serif; }
 .auth-hero { display: flex; flex-direction: column; align-items: center; padding: 52px 24px 32px; background: #1A1A2E; }
