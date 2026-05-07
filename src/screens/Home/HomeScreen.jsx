@@ -36,12 +36,23 @@ function FacilityCard({ facility, index }) {
   const navigate = useNavigate()
   const gradient = CARD_GRADIENTS[index % CARD_GRADIENTS.length]
 
+  const hasPhoto = facility.images?.[0] && !facility.images[0].startsWith('gradient')
+
   return (
     <div
       className="home-facility-card"
       onClick={() => navigate(`/facility/${facility.id}`)}
     >
-      <div className="home-facility-img" style={{ background: gradient }}>
+      <div className="home-facility-img" style={!hasPhoto ? { background: gradient } : {}}>
+        {hasPhoto && (
+          <img
+            src={facility.images[0]}
+            alt={facility.name}
+            className="home-facility-photo"
+            onError={e => { e.target.style.display='none'; e.target.parentNode.style.background = gradient; }}
+          />
+        )}
+        <div className="home-facility-img-overlay" />
         <span className="home-facility-sport-badge">피클볼</span>
         <span className="home-facility-rating">⭐ {facility.rating}</span>
       </div>

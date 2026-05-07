@@ -33,7 +33,7 @@ export const facilities = [
     amenities: ['샤워실', '탈의실', '주차장', '음료 자판기', '라켓 대여', '볼 대여'],
     rating: 4.8,
     reviewCount: 124,
-    images: ['gradient1']
+    images: ['https://sspark.genspark.ai/cfimages?u1=l1bXJHDQ5O9kO%2FMbDRIQP%2Fp7VMAdnYAOieqCB%2FeropR633kdOEaJw9dGohqo6Oq7ud%2BlDaJ3vdxFzovCmzgCuPU%2F5UEtti2%2F3QHsYpXLhC3IWoMuR7N4%2Fd1fMZdnRsqstcd4iAANTaYGlGmHO%2BaDcdDIA7XTTgO6u6xUaIAgEoc5UhNF9bIryyg8u9GnjcU%3D&u2=M9LGyP0ZjcHcg4gh&width=2560']
   },
   {
     id: 'f2',
@@ -66,7 +66,7 @@ export const facilities = [
     amenities: ['샤워실', '주차장', '카페', '라켓 대여'],
     rating: 4.5,
     reviewCount: 87,
-    images: ['gradient2']
+    images: ['https://sspark.genspark.ai/cfimages?u1=xzb75yDMEXhR7gvdfeGcMZK5Uq6R6KpVwd4z9t%2BqyL%2Fjqs548V26%2BwZqRoJJVd7EpTabUE6zaL2vgrRjh7pOc0wAxjJ0MMgt7ga7%2FOCroXM3LQuDHISwyffFrncvEfulBQt1wUkYhmeWeGk1ovHkVKxR%2FfQxAw%3D%3D&u2=9bMaCUyhlctZShxf&width=2560']
   },
   {
     id: 'f3',
@@ -99,7 +99,7 @@ export const facilities = [
     amenities: ['샤워실', '탈의실', '주차장', '매점', '물리치료실', '라켓 대여', '볼 대여'],
     rating: 4.7,
     reviewCount: 203,
-    images: ['gradient3']
+    images: ['https://sspark.genspark.ai/cfimages?u1=SdqpyvY1cUMjH2ZLE6nTG0OqwQcHfG%2BxUQ4siVdelZUlHfj5w9sq36H8rsbXW7vNb7kyocxC1iLUlgVRBdIJzkKBEYmq5zNJOAEgk1BkK2qGhFC5fTBArfySS1kmkOqx9A%3D%3D&u2=zHmLlh8BtHzPnuRW&width=2560']
   },
   {
     id: 'f4',
@@ -132,7 +132,7 @@ export const facilities = [
     amenities: ['회원 라운지', '샤워실', '탈의실', '주차장', '카페', '라켓 대여'],
     rating: 4.9,
     reviewCount: 67,
-    images: ['gradient4']
+    images: ['https://sspark.genspark.ai/cfimages?u1=k%2BURspaOPL%2FrHS9nh4TKOpzq4VZhDoZ6qgLkafQz7XDaHMLKxA5nCmuNraur1NJxOG35WhsyL2mJ9KHhd%2BezNt1VKdOJe7BQrbgvwxB7l7SSDM0HVA%3D%3D&u2=JSYd2nBLeN%2FXTUm5&width=2560']
   },
   {
     id: 'f5',
@@ -164,7 +164,7 @@ export const facilities = [
     amenities: ['샤워실', '주차장', '라켓 대여', '볼 대여', '음료 자판기'],
     rating: 4.6,
     reviewCount: 95,
-    images: ['gradient5']
+    images: ['https://sspark.genspark.ai/cfimages?u1=QObUbtJe0eNZwVwulV%2BVEliNvk2ONL5Oxb4Q3tRkTeDKyYVrDinay%2BWOLfI0UfJjDiYK1PdQj%2F9Aujc3FgHlA%2Byf1sJIC8vjGf%2FKCMhmDagaP1MEwyMvdJ659IcQS3L%2BiejWCIkfjO9IZ37xjpJeM1NiTM0x8%2F4NJ75j2iVh9oPWTDkMDDtz%2BW5V4gw%3D&u2=OLzj9WPsp4bmEATz&width=2560']
   },
   {
     id: 'f6',
@@ -197,7 +197,7 @@ export const facilities = [
     amenities: ['주차장', '라켓 대여', '볼 대여', '음료 자판기'],
     rating: 4.3,
     reviewCount: 142,
-    images: ['gradient6']
+    images: ['https://sspark.genspark.ai/cfimages?u1=%2BquGmGhICm7XPYMHB3MsxUoVdy9piRpcrhhGj0nzOkEsZ170ExlpHDfl2JK6yBvLiDxOZE%2F%2FO6FG29bFXvYIWrcGVt2HGmfezAGobZ%2Fss8%2FjDgS%2FkHP0HI4qpA%3D%3D&u2=rC%2FClNjtwi0KlsLi&width=2560']
   },
   {
     id: 'f7',
@@ -230,7 +230,7 @@ export const facilities = [
     amenities: ['샤워실', '탈의실', '주차장', '매점', '라켓 대여', '볼 대여', '수리 서비스'],
     rating: 4.4,
     reviewCount: 178,
-    images: ['gradient7']
+    images: ['https://sspark.genspark.ai/cfimages?u1=dG3nMaHCOmT6KhJrElZRhrp4M%2BDdakF9QLAi5ovWBxD1vKdOWi4zBvC2LGpCBo8A0%2B5RFTeoOp9w73K%2FasWccLpRRoU%3D&u2=iQBlKclb7Z8C68Cn&width=2560']
   },
   {
     id: 'f8',
@@ -262,7 +262,7 @@ export const facilities = [
     amenities: ['주차장', '매점', '라켓 대여', '볼 대여'],
     rating: 4.2,
     reviewCount: 56,
-    images: ['gradient8']
+    images: ['https://sspark.genspark.ai/cfimages?u1=W4jeVO33bYRl1B%2BJ5AP%2FG3L3%2FYGtJB8WUUAFjbvlUMkBiCZtfVbLUlF8UxBxXnpC7whytiooYxL%2F%2BMMo5W7HY%2FZs7dJE%2FfySVMpXfebc1uuO450DofOuYfxlorLoH7954YZV&u2=9c3RvaSA1Rn5OF%2BA&width=2560']
   }
 ]
 

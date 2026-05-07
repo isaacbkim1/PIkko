@@ -94,9 +94,18 @@ export default function FacilityDetailScreen() {
       </div>
 
       {/* ── Hero ── */}
-      <div className="facility-hero" style={{ background: gradient }}>
+      <div className="facility-hero" style={!facility.images?.[0] || facility.images[0].startsWith('gradient') ? { background: gradient } : {}}>
+        {facility.images?.[0] && !facility.images[0].startsWith('gradient') && (
+          <img
+            src={facility.images[0]}
+            alt={facility.name}
+            className="facility-hero-photo"
+            onError={e => { e.target.style.display='none'; }}
+          />
+        )}
+        <div className="facility-hero-overlay" />
         <div className="facility-hero-body">
-          <span className="facility-hero-sport">🏓 피클볼</span>
+          <span className="facility-hero-sport">피클볼</span>
           <h1 className="facility-hero-name">{facility.name}</h1>
           <div className="facility-hero-meta">
             <span className="facility-hero-district">📍 {facility.district}</span>
