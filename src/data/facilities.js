@@ -268,7 +268,17 @@ export const facilities = [
 
 export const districts = ['전체', '강남구', '마포구', '송파구', '서초구', '용산구', '성동구', '강서구', '노원구']
 
-export const getFacilityById = (id) => facilities.find(f => f.id === id)
+// Merge featured facilities for unified lookup (booking + detail screens)
+import { featuredFacilities } from './featuredFacilities.js'
+
+export const allFacilities = [...facilities, ...featuredFacilities.map(f => ({
+  ...f,
+  name: f.koreanName,
+  sport: 'pickleball',
+  slots: f.slots.map(t => ({ time: t, available: true })),
+}))]
+
+export const getFacilityById = (id) => allFacilities.find(f => f.id === id)
 
 export const getFacilitiesByDistrict = (district) => {
   if (!district || district === '전체') return facilities

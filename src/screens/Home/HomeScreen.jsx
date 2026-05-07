@@ -4,7 +4,9 @@ import { useAuth } from '../../context/AuthContext.jsx'
 import Layout from '../../components/Layout/Layout'
 import KakaoMap from '../../components/Map/KakaoMap'
 import Badge from '../../components/UI/Badge'
+import FeaturedCourts from '../../components/FeaturedCourts/FeaturedCourts.jsx'
 import { facilities } from '../../data/facilities'
+import { featuredFacilities } from '../../data/featuredFacilities.js'
 import { events } from '../../data/events'
 import { useNotifications } from '../../hooks/useNotifications'
 import './HomeScreen.css'
@@ -208,6 +210,9 @@ export default function HomeScreen() {
           </div>
         </div>
 
+        {/* ── Featured Courts (5 Real Locations) ── */}
+        <FeaturedCourts />
+
         {/* ── Nearby Facilities ── */}
         <div className="home-section">
           <div className="home-section-header">
@@ -228,7 +233,17 @@ export default function HomeScreen() {
           <div className="home-section-header">
             <h2 className="home-section-title">지도로 찾기</h2>
           </div>
-          <KakaoMap facilities={facilities} height={260} />
+          <KakaoMap
+            facilities={[
+              ...facilities,
+              ...featuredFacilities.map(f => ({
+                ...f,
+                name: f.koreanName,
+                sport: 'pickleball',
+              }))
+            ]}
+            height={280}
+          />
         </div>
 
         {/* ── Upcoming Events ── */}
