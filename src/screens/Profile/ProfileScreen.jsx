@@ -163,6 +163,16 @@ export default function ProfileScreen() {
         </div>
 
         <div style={{ height: 16 }} />
+
+        <p style={{
+          textAlign: 'center',
+          fontSize: 11,
+          color: '#9ca3af',
+          paddingBottom: 24,
+          letterSpacing: '0.3px',
+        }}>
+          Published by Inus Labs
+        </p>
       </div>
     </Layout>
   )

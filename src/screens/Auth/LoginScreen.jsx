@@ -169,6 +169,8 @@ export default function LoginScreen() {
           </p>
 
         </form>
+
+        <p className="login-publisher">Published by Inus Labs</p>
       </div>
     </div>
   );
